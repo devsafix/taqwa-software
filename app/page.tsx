@@ -1,3 +1,4 @@
+import { BlogSection } from "@/components/modules/BlogSection";
 import { FAQ } from "@/components/modules/FAQ";
 import { HeroSection } from "@/components/modules/hero-section";
 import { MarqueeSection } from "@/components/modules/marquee-section";
@@ -16,6 +17,7 @@ export default function Home() {
       <FAQ />
       <StatsSection />
       <Newsletter />
+      <BlogSection />
     </main>
   );
 }
