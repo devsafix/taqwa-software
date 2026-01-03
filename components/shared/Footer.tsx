@@ -55,7 +55,7 @@ const Footer: React.FC = () => {
                 <li key={item}>
                   <Link
                     href="#"
-                    className="text-zinc-500 hover:text-white/80 transition-colors flex items-center group text-sm font-medium"
+                    className="text-white/50 hover:text-white/80 transition-colors flex items-center group text-sm font-medium"
                   >
                     {item}
                     <ArrowUpRight className="w-3 h-3 ml-2 opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all" />
@@ -72,13 +72,13 @@ const Footer: React.FC = () => {
             </h4>
             <div className="space-y-6">
               <div className="space-y-1">
-                <p className="text-zinc-500 text-sm">Drop us a line</p>
+                <p className="text-white/50 text-sm">Drop us a line</p>
                 <p className="text-white/80 font-medium hover:text-zinc-300 cursor-pointer transition-colors">
                   admin@taqwasoftware.com
                 </p>
               </div>
               <div className="space-y-1">
-                <p className="text-zinc-500 text-sm">Global HQ</p>
+                <p className="text-white/50 text-sm">Global HQ</p>
                 <p className="text-white/80 font-medium leading-relaxed">
                   Innovation Tower, DIFC <br />
                   Dubai, UAE

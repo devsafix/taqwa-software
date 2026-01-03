@@ -26,7 +26,7 @@ export function HeroSection() {
   }, []);
 
   const scrollToWork = () => {
-    document.getElementById("work")?.scrollIntoView({ behavior: "smooth" });
+    document.getElementById("works")?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -86,7 +86,7 @@ export function HeroSection() {
             className="md:h-14 h-12 px-10 bg-white/90 text-black hover:bg-white/95 rounded-full font-bold md:text-base cursor-pointer transition-all duration-200"
             onClick={scrollToWork}
           >
-            Works We&apos;ve Done
+           Our Works Example
             <ArrowRight className="h-5 w-5" />
           </Button>
           <Button

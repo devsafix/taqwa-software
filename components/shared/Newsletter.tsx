@@ -5,7 +5,9 @@ import { Send } from "lucide-react";
 
 const Newsletter = () => {
   return (
-    <section className="py-32 px-6">
+    <section className="py-24 md:py-32 px-4 relative">
+      {/* Subtle radial glow to separate sections */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-linear-to-r from-transparent via-white/10 to-transparent" />
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
