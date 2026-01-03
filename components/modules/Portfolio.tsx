@@ -62,6 +62,8 @@ const projectVariants: Variants = {
 export function Portfolio() {
   return (
     <section id="works" className="py-24 md:py-32 px-4 relative">
+      {/* Top Gradient Divider */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-linear-to-r from-transparent via-white/10 to-transparent" />
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
