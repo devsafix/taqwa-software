@@ -47,6 +47,9 @@ export function ServicesSection() {
           transition={{ duration: 0.8 }}
           className="text-center mb-20"
         >
+          <span className="text-white/60 font-bold tracking-[0.4em] uppercase text-[10px] mb-4 block">
+            What We Offer
+          </span>
           <h2 className="text-4xl md:text-6xl font-bold mb-6 tracking-tighter text-white/90 ">
             Our Services
           </h2>
