@@ -41,7 +41,7 @@ export function FAQ() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-24"
+          className="text-center mb-16 md:mb-24"
         >
           <span className="text-white/60 font-bold tracking-[0.4em] uppercase text-[10px] mb-4 block">
             Common Questions
@@ -75,7 +75,7 @@ export function FAQ() {
                   className="w-full p-8 flex items-center justify-between text-left group"
                 >
                   <span
-                    className={`font-bold text-xl md:text-2xl tracking-tight transition-colors duration-300 ${
+                    className={`font-bold text-lg md:text-2xl tracking-tight transition-colors duration-300 ${
                       activeIndex === index
                         ? "text-white"
                         : "text-white/60 group-hover:text-white/80"
@@ -105,7 +105,7 @@ export function FAQ() {
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                     >
-                      <p className="px-8 pb-8 text-white/60 text-lg font-light leading-relaxed">
+                      <p className="px-8 pb-8 text-white/60 text-base md:text-lg font-light leading-relaxed">
                         {faq.answer}
                       </p>
                     </motion.div>

@@ -70,7 +70,7 @@ export function Portfolio() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-24"
+          className="text-center mb-16 md:mb-24"
         >
           <span className="text-white/60 font-bold tracking-[0.4em] uppercase text-[10px] mb-4 block">
             Our Portfolio
