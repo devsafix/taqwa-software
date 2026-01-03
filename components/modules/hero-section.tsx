@@ -3,89 +3,119 @@
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronDown } from "lucide-react";
 import gsap from "gsap";
 
 export function HeroSection() {
   const headlineRef = useRef<HTMLHeadingElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (headlineRef.current) {
       const words = headlineRef.current.querySelectorAll(".word");
       gsap.from(words, {
         opacity: 0,
-        y: 50,
-        duration: 0.8,
+        y: 100,
+        rotateX: -45,
+        duration: 1.2,
         stagger: 0.1,
-        ease: "power3.out",
+        ease: "power4.out",
         delay: 0.5,
       });
     }
   }, []);
 
   const scrollToWork = () => {
-    const element = document.getElementById("work");
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
+    document.getElementById("work")?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-4">
-      {/* Background gradient effect */}
-      <div className="absolute inset-0 bg-linear-to-b from-accent/5 to-transparent pointer-events-none" />
+    <section
+      ref={containerRef}
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-4 pt-20"
+    >
+      {/* Premium Ambient Background */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-150 h-150 bg-white/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="container mx-auto text-center relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="inline-block mb-6 px-4 py-2 bg-accent border border-accent/20 rounded-full text-sm text-white/70"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="inline-flex items-center gap-2 mb-8 px-4 py-1.5 rounded-full border border-zinc-700 bg-zinc-900/50 backdrop-blur-sm"
         >
-          Crafting Digital Excellence
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+          </span>
+          <span className="text-xs font-bold tracking-[0.2em] uppercase text-zinc-400">
+            Available for New Projects
+          </span>
         </motion.div>
 
         <h1
           ref={headlineRef}
-          className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold mb-6 leading-tight text-balance"
+          className="text-5xl md:text-7xl lg:text-9xl font-bold mb-8 leading-[0.9] tracking-tighter text-white perspective-1000"
         >
           <span className="word inline-block">Building</span>{" "}
           <span className="word inline-block">the</span>{" "}
-          <span className="word inline-block">future</span>
+          <span className="word inline-block text-zinc-500">future</span>
           <br />
           <span className="word inline-block">of</span>{" "}
           <span className="word inline-block">software</span>
         </h1>
 
         <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.8 }}
-          className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.4, duration: 0.8 }}
+          className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto mb-12 leading-relaxed font-light"
         >
           We transform visionary ideas into exceptional digital experiences
-          through innovative technology and elegant design
+          through innovative technology and elegant engineering.
         </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.5, duration: 0.6 }}
+          transition={{ delay: 1.6, duration: 0.6 }}
           className="flex flex-col sm:flex-row gap-4 justify-center items-center"
         >
-          <Button size="lg" className="text-base px-8" onClick={scrollToWork}>
-            View Our Work
-            <ArrowRight className="ml-2 h-5 w-5" />
+          <Button
+            size="lg"
+            className="md:h-14 h-12 px-10 bg-white/90 text-black hover:bg-white/95 rounded-full font-bold md:text-base cursor-pointer transition-all duration-200"
+            onClick={scrollToWork}
+          >
+            Works We&apos;ve Done
+            <ArrowRight className="h-5 w-5" />
           </Button>
           <Button
             size="lg"
             variant="outline"
-            className="text-base px-8 bg-transparent"
+            className="md:h-14 h-12 px-10 border-zinc-700 text-white/90 hover:bg-zinc-900 rounded-full font-bold md:text-base bg-transparent transition-all"
           >
             Get Started
           </Button>
         </motion.div>
       </div>
+
+      {/* Scroll Indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2, duration: 1 }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2"
+      >
+        <span className="text-[10px] uppercase tracking-[0.3em] text-white/70 font-bold">
+          Scroll
+        </span>
+        <motion.div
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        >
+          <ChevronDown className="w-4 h-4 text-zinc-400" />
+        </motion.div>
+      </motion.div>
     </section>
   );
 }
