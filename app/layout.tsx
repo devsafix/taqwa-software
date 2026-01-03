@@ -23,11 +23,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col bg-linear-to-br from-zinc-900 via-zinc-950 to-black`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col bg-[#09090b]`}
       >
+        {/* Move the gradient to a fixed background div for better rendering */}
+        <div className="fixed inset-0 z-[-1] bg-linear-to-br from-zinc-900 via-[#050505] to-black" />
         <Navbar />
-        {/* Added a subtle grain overlay for that high-end agency feel */}
-        <div className="fixed inset-0 z-[-1] opacity-20 pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
         <main className="grow">{children}</main>
         <Footer />
       </body>
