@@ -57,7 +57,7 @@ const Navbar = () => {
 
           {/* Desktop Nav Links */}
           <div className="hidden md:flex items-center gap-8">
-            {["Home", "About", "Services", "Works", "Blog"].map((item) => (
+            {["Home", "Services", "Works", "Blogs"].map((item) => (
               <Link
                 key={item}
                 href={`#${item.toLowerCase()}`}
@@ -95,7 +95,7 @@ const Navbar = () => {
             <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-3xl -mr-16 -mt-16" />
 
             <div className="flex flex-col gap-6 relative z-10">
-              {["Home", "About", "Services", "Works"].map((item) => (
+              {["Home", "Services", "Works", "Blogs"].map((item) => (
                 <motion.div key={item} variants={itemVariants}>
                   <Link
                     href={`#${item.toLowerCase()}`}

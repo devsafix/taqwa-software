@@ -1,3 +1,4 @@
+import { FAQ } from "@/components/modules/FAQ";
 import { HeroSection } from "@/components/modules/hero-section";
 import { MarqueeSection } from "@/components/modules/marquee-section";
 import { Portfolio } from "@/components/modules/Portfolio";
@@ -12,6 +13,7 @@ export default function Home() {
       <MarqueeSection />
       <ServicesSection />
       <Portfolio />
+      <FAQ />
       <StatsSection />
       <Newsletter />
     </main>
