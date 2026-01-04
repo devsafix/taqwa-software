@@ -12,6 +12,48 @@ import Link from "next/link";
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
+  const menu = [
+    {
+      name: "Home",
+      href: "/",
+    },
+    {
+      name: "Services",
+      href: "#services",
+    },
+    {
+      name: "Projects",
+      href: "#works",
+    },
+    {
+      name: "Careers",
+      href: "/careers",
+    },
+  ];
+
+  const social = [
+    {
+      name: "Linkedin",
+      href: "https://www.linkedin.com/company/taqwasoft",
+      icon: Linkedin,
+    },
+    {
+      name: "Github",
+      href: "https://github.com/taqwasoft",
+      icon: Github,
+    },
+    {
+      name: "Instagram",
+      href: "https://www.instagram.com/taqwasoft",
+      icon: Instagram,
+    },
+    {
+      name: "Twitter",
+      href: "https://twitter.com/taqwasoft",
+      icon: Twitter,
+    },
+  ];
+
   return (
     <footer className="bg-black pt-16 md:pt-32 pb-12 px-4 md:px-6 border-t border-zinc-900 relative overflow-hidden">
       {/* Subtle Background Glow */}
@@ -33,14 +75,16 @@ const Footer: React.FC = () => {
               assets that stand the test of time.
             </p>
             <div className="flex gap-4">
-              {[Instagram, Twitter, Linkedin, Github].map((Icon, i) => (
-                <a
+              {social.map(({ href, icon: Icon }, i) => (
+                <Link
                   key={i}
-                  href="#"
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-12 h-12 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-zinc-900 hover:border-zinc-700 transition-all duration-300"
                 >
                   <Icon className="w-5 h-5" />
-                </a>
+                </Link>
               ))}
             </div>
           </div>
@@ -51,13 +95,13 @@ const Footer: React.FC = () => {
               Navigation
             </h4>
             <ul className="space-y-4">
-              {["About", "Services", "Projects", "Careers"].map((item) => (
-                <li key={item}>
+              {menu.map((item, i) => (
+                <li key={i}>
                   <Link
-                    href="#"
+                    href={item.href}
                     className="text-white/50 hover:text-white/80 transition-colors flex items-center group text-sm font-medium"
                   >
-                    {item}
+                    {item.name}
                     <ArrowUpRight className="w-3 h-3 ml-2 opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all" />
                   </Link>
                 </li>
@@ -81,7 +125,7 @@ const Footer: React.FC = () => {
                 <p className="text-white/50 text-sm">Global HQ</p>
                 <p className="text-white/80 font-medium leading-relaxed">
                   Innovation Tower, DIFC <br />
-                  Dubai, UAE
+                  Dhaka, Bangladesh
                 </p>
               </div>
             </div>
@@ -94,15 +138,18 @@ const Footer: React.FC = () => {
             © {currentYear} TAQWA SOFTWARE. ALL RIGHTS RESERVED.
           </p>
           <div className="flex gap-10">
-            {["Privacy Policy", "Terms of Service"].map((link) => (
-              <a
-                key={link}
-                href="#"
-                className="text-white/80 hover:text-white text-xs transition-colors uppercase tracking-widest"
-              >
-                {link}
-              </a>
-            ))}
+            <Link
+              href="/privacy-policy"
+              className="text-white/80 hover:text-white text-xs transition-colors uppercase tracking-widest"
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              href="/terms-of-service"
+              className="text-white/80 hover:text-white text-xs transition-colors uppercase tracking-widest"
+            >
+              Terms of Service
+            </Link>
           </div>
         </div>
       </div>

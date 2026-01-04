@@ -3,8 +3,9 @@
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { ArrowDown, ChevronDown } from "lucide-react";
 import gsap from "gsap";
+import Link from "next/link";
 
 export function HeroSection() {
   const headlineRef = useRef<HTMLHeadingElement>(null);
@@ -86,16 +87,18 @@ export function HeroSection() {
             className="md:h-14 h-12 px-10 bg-white/90 text-black hover:bg-white/95 rounded-full font-bold md:text-base cursor-pointer transition-all duration-200"
             onClick={scrollToWork}
           >
-           Our Works Example
-            <ArrowRight className="h-5 w-5" />
+            Sample Works
+            <ArrowDown className="h-5 w-5" />
           </Button>
-          <Button
-            size="lg"
-            variant="outline"
-            className="md:h-14 h-12 px-10 border-zinc-700 text-white/90 hover:bg-zinc-900 rounded-full font-bold md:text-base bg-transparent transition-all"
-          >
-            Get Started
-          </Button>
+          <Link target="_blank" href={"https://wa.me/8801709190412"}>
+            <Button
+              size="lg"
+              variant="outline"
+              className="md:h-14 h-12 px-10 border-zinc-700 text-white/90 hover:bg-zinc-900 rounded-full font-bold md:text-base bg-transparent transition-all"
+            >
+              Get Started
+            </Button>
+          </Link>
         </motion.div>
       </div>
 

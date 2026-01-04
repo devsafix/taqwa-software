@@ -66,9 +66,11 @@ const Navbar = () => {
                 {item}
               </Link>
             ))}
-            <button className="px-5 py-2 bg-white text-black text-xs font-bold rounded-full hover:bg-zinc-200 transition-all transform hover:scale-105 active:scale-95">
-              LETS TALK
-            </button>
+            <Link target="_blank" href={"https://wa.me/8801709190412"}>
+              <button className="px-5 py-2 bg-white text-black text-xs font-bold rounded-full hover:bg-zinc-200 transition-all transform hover:scale-105 active:scale-95 cursor-pointer">
+                LETS TALK
+              </button>
+            </Link>
           </div>
 
           {/* Mobile Toggle */}
@@ -100,16 +102,18 @@ const Navbar = () => {
                   <Link
                     href={`#${item.toLowerCase()}`}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="md:text-2xl text-xl font-bold text-zinc-400 hover:text-white transition-colors block"
+                    className="md:text-2xl text-xl font-bold text-white/60 hover:text-white transition-colors block"
                   >
                     {item}
                   </Link>
                 </motion.div>
               ))}
               <motion.div variants={itemVariants} className="pt-4">
-                <button className="w-full py-4 bg-white text-black font-bold rounded-2xl">
-                  LETS TALK
-                </button>
+                <Link target="_blank" href={"https://wa.me/8801709190412"}>
+                  <button className="w-full py-4 bg-white text-black font-bold rounded-2xl">
+                    LETS TALK
+                  </button>
+                </Link>
               </motion.div>
             </div>
           </motion.div>

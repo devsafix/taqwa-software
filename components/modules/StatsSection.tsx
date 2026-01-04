@@ -4,9 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
 const stats = [
-  { value: 8, suffix: "+", label: "Years Experience" },
-  { value: 150, suffix: "+", label: "Projects Delivered" },
-  { value: 50, suffix: "+", label: "Happy Clients" },
+  { value: 3, suffix: "+", label: "Years Experience" },
+  { value: 20, suffix: "+", label: "Projects Delivered" },
+  { value: 17, suffix: "+", label: "Happy Clients" },
   { value: 98, suffix: "%", label: "Success Rate" },
 ];
 
