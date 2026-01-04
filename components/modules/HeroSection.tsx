@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowDown, ChevronDown } from "lucide-react";
+import { ArrowDown } from "lucide-react";
 import gsap from "gsap";
 import Link from "next/link";
 
