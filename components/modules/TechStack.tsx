@@ -1,85 +1,74 @@
 "use client";
-
 import { motion } from "framer-motion";
+import { Code2, Cpu, Globe2, LayoutTemplate } from "lucide-react";
 
-const technologies = [
-  "Next.js",
-  "React",
-  "Node.js",
-  "MongoDB",
-  "PostgreSQL",
-  "n8n",
-  "Vercel",
-  "Hostinger",
-  "AWS",
-  "TypeScript",
-  "Prisma",
-  "Tailwind CSS",
+const techGroups = [
+  {
+    title: "Development",
+    icon: <Code2 className="w-5 h-5 text-white/70" />,
+    items: [
+      "Next.js",
+      "React.js",
+      "Node.js",
+      "Express.js",
+      "Nest.js",
+      "Flutter",
+    ],
+    className: "md:col-span-2",
+  },
+  {
+    title: "Data",
+    icon: <Cpu className="w-5 h-5 text-white/70" />,
+    items: ["MongoDB", "SQL", "PostgreSQL"],
+    className: "md:col-span-1",
+  },
+  {
+    title: "AI & Automation",
+    icon: <Globe2 className="w-5 h-5 text-white/70" />,
+    items: ["N8N", "Zapier", "Make.com", "LangChain", "Langflow"],
+    className: "md:col-span-1",
+  },
+  {
+    title: "Design & Apps",
+    icon: <LayoutTemplate className="w-5 h-5 text-white/70" />,
+    items: ["UI/UX", "Google Workspace Studio"],
+    className: "md:col-span-2",
+  },
 ];
 
 export function TechStack() {
   return (
-    <section className="py-20 md:py-32 px-4 relative overflow-hidden">
-      {/* Subtle top divider to maintain section flow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-linear-to-r from-transparent via-white/10 to-transparent" />
-
-      <div className="max-w-7xl mx-auto relative z-10">
-        <div className="flex flex-col items-center">
-          {/* Section Heading */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <span className="text-white/60 font-bold tracking-[0.4em] uppercase text-[10px] mb-4 block">
-              Our Core Stack
-            </span>
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-white/90">
-              Powered by Modern{" "}
-              <span className="italic text-white/40">Innovation</span>
-            </h2>
-          </motion.div>
-
-          {/* Technology Grid/Flex Wrapper */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ staggerChildren: 0.05, delayChildren: 0.2 }}
-            className="flex flex-wrap justify-center gap-3 md:gap-4 max-w-5xl"
-          >
-            {technologies.map((tech) => (
-              <motion.div
-                key={tech}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -5, borderColor: "rgba(255,255,255,0.3)" }}
-                className="px-6 py-3 md:px-8 md:py-4 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-300 group cursor-default"
-              >
-                <span className="text-sm md:text-lg font-bold tracking-tight text-white/60 group-hover:text-white transition-colors">
-                  {tech}
-                </span>
-              </motion.div>
-            ))}
-          </motion.div>
-
-          {/* Subtext */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.8 }}
-            className="mt-16 text-[10px] md:text-xs text-white/60 font-bold uppercase tracking-[0.4em] text-center"
-          >
-            Engineered for performance, scalability, and security
-          </motion.p>
+    <section className="py-20 px-4 bg-black">
+      <div className="max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {techGroups.map((group, i) => (
+            <motion.div
+              key={group.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.1 }}
+              className={`p-8 rounded-3xl bg-white/3 border border-white/10 hover:border-white/20 transition-all ${group.className}`}
+            >
+              <div className="flex items-center gap-3 mb-6">
+                {group.icon}
+                <h3 className="text-white/40 text-xs font-bold uppercase tracking-widest">
+                  {group.title}
+                </h3>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {group.items.map((item) => (
+                  <span
+                    key={item}
+                    className={`px-4 py-1.5 rounded-full bg-white/5 border ${item === "Next.js" || item === "Flutter" || item === "Nest.js" || item === "PostgreSQL" || item === "N8N" || item === "UI/UX" ? "bg-white/15 border-white/30" : ""} border-white/5 text-sm font-medium text-white/80`}
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
-
-      {/* Background Ambient Glow (matches Hero consistency) */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-1/2 bg-white/2 blur-[120px] rounded-full pointer-events-none" />
     </section>
   );
 }

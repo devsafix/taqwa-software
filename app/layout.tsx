@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: {
     default:
-      "TaqwaSoftware | Web Solutions | App Development | AI Agents | Engineering Excellence",
+      "TaqwaSoftware | Web Solutions | App Development | AI Agents",
     template: "%s | TaqwaSoftware",
   },
   description:
