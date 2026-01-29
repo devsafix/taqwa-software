@@ -35,9 +35,26 @@ export function HeroSection() {
       ref={containerRef}
       className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-4 pt-16"
     >
-      {/* Premium Ambient Background */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-150 h-150 bg-white/5 rounded-full blur-[120px] pointer-events-none" />
+      {/* 1. Background Video Layer */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover scale-110 opacity-40 brightness-75"
+        >
+          <source src="/loopbg.mp4" type="video/mp4" />
+        </video>
+        {/* Subtle Gradient Overlays for Readability */}
+        <div className="absolute inset-0 bg-linear-to-b from-black via-transparent to-black" />
+        <div className="absolute inset-0 bg-black/20 backdrop-blur-[1px]" />
+      </div>
 
+      {/* 2. Ambient Glow (kept for consistency) */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-150 h-150 bg-white/5 rounded-full blur-[120px] pointer-events-none z-1" />
+
+      {/* 3. Hero Content Container */}
       <div className="max-w-7xl mx-auto text-center relative z-10">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
@@ -60,7 +77,7 @@ export function HeroSection() {
         >
           <span className="word inline-block">Building</span>{" "}
           <span className="word inline-block">the</span>{" "}
-          <span className="word inline-block text-zinc-500">future</span>
+          <span className="word inline-block text-zinc-400">future</span>
           <br />
           <span className="word inline-block">of</span>{" "}
           <span className="word inline-block">software</span>
@@ -84,7 +101,7 @@ export function HeroSection() {
         >
           <Button
             size="lg"
-            className="md:h-14 h-12 px-10 bg-white/90 text-black hover:bg-white/95 rounded-full font-bold md:text-base cursor-pointer transition-all duration-200"
+            className="md:h-14 h-12 px-10 bg-white/90 text-black hover:bg-white/95 rounded-full font-bold md:text-base cursor-pointer transition-all duration-200 shadow-2xl shadow-white/10"
             onClick={scrollToWork}
           >
             Sample Works
@@ -94,13 +111,25 @@ export function HeroSection() {
             <Button
               size="lg"
               variant="outline"
-              className="md:h-14 h-12 px-10 border-zinc-700 text-white/90 hover:bg-zinc-900 rounded-full font-bold md:text-base bg-transparent transition-all"
+              className="md:h-14 h-12 px-10 border-zinc-700 text-white/90 hover:bg-zinc-900 rounded-full font-bold md:text-base bg-transparent transition-all backdrop-blur-sm"
             >
               Get Started
             </Button>
           </Link>
         </motion.div>
       </div>
+
+      {/* 4. Bottom Scroll Hint */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.5 }}
+        transition={{ delay: 2, duration: 1 }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2"
+      >
+        <span className="text-[10px] uppercase tracking-[0.3em] text-white/70 font-bold">
+          Scroll
+        </span>
+      </motion.div>
     </section>
   );
 }
