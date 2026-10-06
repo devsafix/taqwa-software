@@ -1,4 +1,5 @@
 "use client";
+
 import React from "react";
 import {
   Instagram,
@@ -6,6 +7,9 @@ import {
   Linkedin,
   Github,
   ArrowUpRight,
+  Mail,
+  MapPin,
+  ArrowUp,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -55,76 +59,133 @@ const Footer: React.FC = () => {
   ];
 
   return (
-    <footer className="bg-black pt-16 md:pt-32 pb-12 px-4 md:px-6 border-t border-zinc-900 relative overflow-hidden">
-      {/* Subtle Background Glow */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-px bg-linear-to-r from-transparent via-zinc-500 to-transparent opacity-20" />
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-12 lg:mb-24">
-          {/* Brand Info */}
-          <div className="space-y-8 col-span-1 md:col-span-2">
-            <Link href="/" className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center rotate-3 group hover:rotate-12 transition-transform">
-                <span className="text-black font-black text-lg">T</span>
+    <footer className="relative overflow-hidden border-t border-white/6 bg-[#040814] px-4 pb-8 pt-16 md:px-6 md:pt-24">
+      {/* Ambient Background */}
+      <div className="pointer-events-none absolute -left-60 bottom-0 h-125 w-125 rounded-full bg-blue-600/8 blur-[140px]" />
+
+      <div className="pointer-events-none absolute -right-60 top-20 h-125 w-125 rounded-full bg-cyan-500/6 blur-[140px]" />
+
+      {/* Technical Grid */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.025]"
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(255,255,255,0.8) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.8) 1px, transparent 1px)
+          `,
+          backgroundSize: "60px 60px",
+        }}
+      />
+
+      {/* Center Fade */}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,#040814_82%)]" />
+
+      <div className="relative z-10 mx-auto container px-6">
+        {/* Footer Main Grid */}
+        <div className="grid grid-cols-1 gap-14 border-b border-white/6 pb-14 md:grid-cols-2 lg:grid-cols-4 lg:gap-10 lg:pb-20">
+          {/* Brand */}
+          <div className="space-y-7 md:col-span-2 lg:col-span-2">
+            <Link href="/" className="group inline-flex items-center gap-3">
+              <div className="flex h-11 w-11 rotate-3 items-center justify-center rounded-xl bg-white transition-all duration-300 group-hover:rotate-12 group-hover:bg-blue-400">
+                <span className="text-lg font-black text-black">T</span>
               </div>
+
               <span className="text-2xl font-bold uppercase tracking-tighter text-white">
                 Taqwa Software
               </span>
             </Link>
-            <p className="text-white/80 max-w-sm text-lg font-light leading-relaxed">
+
+            <p className="max-w-md text-base font-light leading-7 text-zinc-500">
               Excellence in engineering, elegance in design. We build digital
-              assets that stand the test of time.
+              products, intelligent systems, and software experiences designed
+              to stand the test of time.
             </p>
-            <div className="flex gap-4">
-              {social.map(({ href, icon: Icon }, i) => (
+
+            {/* Socials */}
+            <div className="flex gap-3">
+              {social.map(({ href, icon: Icon, name }) => (
                 <Link
-                  key={i}
+                  key={name}
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-12 h-12 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-zinc-900 hover:border-zinc-700 transition-all duration-300"
+                  aria-label={name}
+                  className="group flex h-11 w-11 items-center justify-center rounded-full border border-white/8 bg-white/2.5 text-zinc-500 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-blue-400/20 hover:bg-blue-500/10 hover:text-blue-400"
                 >
-                  <Icon className="w-5 h-5" />
+                  <Icon className="h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
                 </Link>
               ))}
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div className="space-y-8">
-            <h4 className="text-white/90 font-bold text-xs uppercase tracking-[0.2em]">
-              Navigation
-            </h4>
+          {/* Navigation */}
+          <div>
+            <div className="mb-7 flex items-center gap-3">
+              <span className="h-1.5 w-1.5 rounded-full bg-blue-400" />
+
+              <h4 className="text-[9px] font-bold uppercase tracking-[0.25em] text-zinc-400">
+                Navigation
+              </h4>
+            </div>
+
             <ul className="space-y-4">
-              {menu.map((item, i) => (
-                <li key={i}>
+              {menu.map((item) => (
+                <li key={item.name}>
                   <Link
                     href={item.href}
-                    className="text-white/50 hover:text-white/80 transition-colors flex items-center group text-sm font-medium"
+                    className="group inline-flex items-center text-sm font-medium text-zinc-500 transition-colors duration-300 hover:text-white"
                   >
                     {item.name}
-                    <ArrowUpRight className="w-3 h-3 ml-2 opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all" />
+
+                    <ArrowUpRight className="ml-2 h-3 w-3 -translate-x-1 translate-y-1 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100" />
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Contact Details */}
-          <div className="space-y-8">
-            <h4 className="text-white/90 font-bold text-xs uppercase tracking-[0.2em]">
-              Contact
-            </h4>
+          {/* Contact */}
+          <div>
+            <div className="mb-7 flex items-center gap-3">
+              <span className="h-1.5 w-1.5 rounded-full bg-cyan-400" />
+
+              <h4 className="text-[9px] font-bold uppercase tracking-[0.25em] text-zinc-400">
+                Contact
+              </h4>
+            </div>
+
             <div className="space-y-6">
-              <div className="space-y-1">
-                <p className="text-white/50 text-sm">Drop us a line</p>
-                <p className="text-white/80 font-medium hover:text-zinc-300 cursor-pointer transition-colors">
+              {/* Email */}
+              <div className="group">
+                <div className="mb-2 flex items-center gap-2">
+                  <Mail className="h-3.5 w-3.5 text-blue-400/70" />
+
+                  <p className="text-[9px] font-bold uppercase tracking-[0.15em] text-zinc-600">
+                    Email
+                  </p>
+                </div>
+
+                <a
+                  href="mailto:admin@taqwasoftware.com"
+                  className="text-sm font-medium text-zinc-400 transition-colors hover:text-white"
+                >
                   admin@taqwasoftware.com
-                </p>
+                </a>
               </div>
-              <div className="space-y-1">
-                <p className="text-white/50 text-sm">Global HQ</p>
-                <p className="text-white/80 font-medium leading-relaxed">
-                  Innovation Tower, DIFC <br />
+
+              {/* Location */}
+              <div>
+                <div className="mb-2 flex items-center gap-2">
+                  <MapPin className="h-3.5 w-3.5 text-cyan-400/70" />
+
+                  <p className="text-[9px] font-bold uppercase tracking-[0.15em] text-zinc-600">
+                    Global HQ
+                  </p>
+                </div>
+
+                <p className="text-sm font-medium leading-6 text-zinc-400">
+                  Innovation Tower, DIFC
+                  <br />
                   Dhaka, Bangladesh
                 </p>
               </div>
@@ -133,22 +194,30 @@ const Footer: React.FC = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-12 border-t border-zinc-900/50 flex flex-col md:flex-row justify-between items-center gap-8">
-          <p className="text-white/80 text-xs tracking-wide">
-            © {currentYear} TAQWA SOFTWARE. ALL RIGHTS RESERVED.
-          </p>
-          <div className="flex gap-10">
+        <div className="flex flex-col items-center justify-between gap-7 pt-8 md:flex-row">
+          <div className="flex flex-col items-center gap-2 md:items-start">
+            <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-zinc-400">
+              © {currentYear} Taqwa Software
+            </p>
+
+            <p className="text-[9px] uppercase tracking-[0.12em] text-zinc-500">
+              Engineering the future, one product at a time.
+            </p>
+          </div>
+
+          <div className="flex items-center gap-7">
             <Link
               href="/privacy-policy"
-              className="text-white/80 hover:text-white text-xs transition-colors uppercase tracking-widest"
+              className="text-[9px] font-bold uppercase tracking-[0.15em] text-zinc-400 transition-colors hover:text-white"
             >
               Privacy Policy
             </Link>
+
             <Link
               href="/terms-of-service"
-              className="text-white/80 hover:text-white text-xs transition-colors uppercase tracking-widest"
+              className="text-[9px] font-bold uppercase tracking-[0.15em] text-zinc-400 transition-colors hover:text-white"
             >
-              Terms of Service
+              Terms
             </Link>
           </div>
         </div>

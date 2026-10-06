@@ -1,11 +1,19 @@
 "use client";
-import React, { useState, useEffect } from "react";
+
+import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, X, Clock, Calendar, Share2 } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  X,
+  Clock,
+  Calendar,
+  Share2,
+  Sparkles,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-// 1. Enhanced Blog Data Structure
 const blogs = [
   {
     title: "The Future of AI Agents in Modern SaaS",
@@ -47,85 +55,188 @@ export function BlogSection() {
     null,
   );
 
-  // Maintain scroll consistency
   useEffect(() => {
-    if (selectedPost) document.body.style.overflow = "hidden";
-    else document.body.style.overflow = "unset";
+    if (selectedPost) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
   }, [selectedPost]);
 
   return (
     <section
       id="blogs"
-      className="py-24 md:py-32 px-4 relative overflow-hidden"
+      className="relative overflow-hidden py-20 md:py-24"
     >
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-linear-to-r from-transparent via-white/10 to-transparent" />
+      {/* Ambient background glows */}
+      <div className="pointer-events-none absolute -left-48 top-1/3 h-125 w-125 rounded-full bg-blue-600/8 blur-[140px]" />
 
-      <div className="max-w-7xl mx-auto">
+      <div className="pointer-events-none absolute -right-48 bottom-0 h-125 w-125 rounded-full bg-cyan-500/6 blur-[140px]" />
+
+      {/* Technical grid */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.025]"
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(255,255,255,0.8) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.8) 1px, transparent 1px)
+          `,
+          backgroundSize: "60px 60px",
+        }}
+      />
+
+      {/* Center fade */}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,#040814_82%)]" />
+
+      {/* Top divider */}
+      <div className="absolute left-1/2 top-0 h-px w-full -translate-x-1/2 bg-linear-to-r from-transparent via-white/10 to-transparent" />
+
+      <div className="relative z-10 mx-auto container px-6">
         {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between md:items-end items-center gap-8 mb-20">
+        <div className="mb-16 flex flex-col items-center justify-between gap-8 md:mb-20 md:flex-row md:items-end">
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
             className="max-w-2xl text-center md:text-left"
           >
-            <span className="text-white/60 font-bold tracking-[0.4em] uppercase text-[10px] mb-4 block">
-              Insights & Journal
-            </span>
-            <h2 className="text-4xl md:text-6xl font-bold tracking-tighter text-white/90">
-              Latest from <span className="italic text-white/40">the Lab</span>
+            {/* Eyebrow */}
+            <div className="mb-5 flex items-center justify-center gap-3 md:justify-start">
+              <span className="relative flex h-2.5 w-2.5 items-center justify-center">
+                <span className="absolute h-2.5 w-2.5 animate-ping rounded-full bg-blue-500/40" />
+
+                <span className="relative h-1.5 w-1.5 rounded-full bg-blue-400 shadow-[0_0_12px_rgba(59,130,246,0.9)]" />
+              </span>
+
+              <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-zinc-500">
+                Insights & Journal
+              </span>
+            </div>
+
+            <h2 className="text-4xl font-bold tracking-tight text-white md:text-5xl lg:text-6xl">
+              Latest from{" "}
+              <span className="bg-linear-to-r from-blue-400 via-blue-300 to-cyan-400 bg-clip-text text-transparent">
+                the Lab
+              </span>
             </h2>
+
+            <p className="mt-5 max-w-xl text-sm leading-7 text-zinc-500 md:text-base">
+              Ideas, experiments, engineering insights, and perspectives from
+              the team building modern digital products.
+            </p>
           </motion.div>
+
+          {/* View all */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
+            initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
           >
             <Link
               href="/blog"
-              className="group flex items-center gap-3 text-white/90 font-bold text-sm tracking-widest uppercase border-b border-white/20 pb-2 hover:border-white transition-all"
+              className="group flex items-center gap-3 rounded-full border border-white/8 bg-white/2.5 px-5 py-3 text-[10px] font-bold uppercase tracking-[0.16em] text-zinc-400 backdrop-blur-xl transition-all duration-300 hover:border-blue-400/20 hover:bg-blue-500/5 hover:text-white"
             >
-              View All Posts{" "}
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              View All Posts
+              <ArrowRight
+                size={15}
+                className="transition-transform duration-300 group-hover:translate-x-1"
+              />
             </Link>
           </motion.div>
         </div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Blog Grid */}
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {blogs.map((post, index) => (
             <motion.article
               key={post.slug}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 35 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1, duration: 0.6 }}
-              className="group cursor-pointer"
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{
+                delay: index * 0.1,
+                duration: 0.7,
+                ease: "easeOut",
+              }}
               onClick={() => setSelectedPost(post)}
+              className="group relative cursor-pointer"
             >
-              <div className="relative aspect-video mb-8 overflow-hidden rounded-4xl border border-white/10 bg-white/5">
-                <Image
-                  src={post.image}
-                  alt={post.title}
-                  fill
-                  className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
-                />
-                <div className="absolute top-4 left-4 px-4 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-[10px] font-bold text-white/80 uppercase tracking-widest">
-                  {post.date}
-                </div>
-              </div>
-              <div className="space-y-4 px-2">
-                <span className="text-white/60 text-[10px] font-black uppercase tracking-[0.3em]">
-                  {post.category}
-                </span>
-                <h3 className="text-2xl font-bold text-white/90 leading-tight group-hover:text-white transition-colors">
-                  {post.title}
-                </h3>
-                <div className="flex items-center gap-2 pt-2 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500">
-                  <span className="text-white font-bold text-xs uppercase tracking-tight">
-                    Read Article
+              {/* Card */}
+              <div className="relative h-full overflow-hidden rounded-3xl border border-white/8 bg-white/2.5 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:border-blue-400/20 hover:bg-white/4 hover:shadow-[0_30px_80px_rgba(0,0,0,0.35)]">
+                {/* Image */}
+                <div className="relative aspect-[1.15/1] overflow-hidden">
+                  <Image
+                    src={post.image}
+                    alt={post.title}
+                    fill
+                    className="object-cover grayscale-[0.3] brightness-75 transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0 group-hover:brightness-90"
+                  />
+
+                  {/* Image gradient */}
+                  <div className="absolute inset-0 bg-linear-to-t from-[#040814] via-transparent to-transparent" />
+
+                  {/* Blue tint */}
+                  <div className="absolute inset-0 bg-blue-950/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+
+                  {/* Date */}
+                  <div className="absolute left-5 top-5 flex items-center gap-2 rounded-full border border-white/10 bg-[#040814]/60 px-3.5 py-2 backdrop-blur-xl">
+                    <Calendar size={11} className="text-blue-400" />
+
+                    <span className="text-[9px] font-semibold uppercase tracking-[0.12em] text-white/70">
+                      {post.date}
+                    </span>
+                  </div>
+
+                  {/* Number */}
+                  <span className="absolute bottom-5 right-5 font-mono text-[10px] tracking-[0.2em] text-white/30">
+                    0{index + 1}
                   </span>
-                  <div className="w-8 h-px bg-white/50" />
+
+                  {/* Read indicator */}
+                  <div className="absolute bottom-5 left-5 flex items-center gap-2 opacity-0 transition-all duration-500 group-hover:opacity-100">
+                    <span className="h-1.5 w-1.5 rounded-full bg-blue-400 shadow-[0_0_8px_rgba(59,130,246,0.8)]" />
+
+                    <span className="text-[9px] font-bold uppercase tracking-[0.18em] text-white/70">
+                      Read Article
+                    </span>
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="p-6 md:p-7">
+                  <div className="mb-4 flex items-center justify-between gap-4">
+                    <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-blue-400/80">
+                      {post.category}
+                    </span>
+
+                    <div className="flex items-center gap-1.5 text-zinc-600">
+                      <Clock size={12} />
+
+                      <span className="text-[9px] uppercase tracking-[0.12em]">
+                        {post.readingTime}
+                      </span>
+                    </div>
+                  </div>
+
+                  <h3 className="text-xl font-bold leading-tight tracking-tight text-white/90 transition-colors duration-300 group-hover:text-white md:text-2xl">
+                    {post.title}
+                  </h3>
+
+                  <div className="mt-7 flex items-center justify-between border-t border-white/6 pt-5">
+                    <span className="text-[9px] font-bold uppercase tracking-[0.18em] text-zinc-600 transition-colors duration-300 group-hover:text-zinc-400">
+                      Explore Insight
+                    </span>
+
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full border border-white/8 bg-white/3 text-zinc-500 transition-all duration-300 group-hover:border-blue-400/20 group-hover:bg-blue-500/10 group-hover:text-blue-400">
+                      <ArrowUpRight size={14} />
+                    </div>
+                  </div>
                 </div>
               </div>
             </motion.article>
@@ -133,72 +244,126 @@ export function BlogSection() {
         </div>
       </div>
 
-      {/* 2. Blog Reading Modal */}
+      {/* Blog Reading Modal */}
       <AnimatePresence>
         {selectedPost && (
           <div className="fixed inset-0 z-100 flex items-center justify-center p-4 md:p-8">
+            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
               onClick={() => setSelectedPost(null)}
-              className="absolute inset-0 bg-black/90 backdrop-blur-xl"
+              className="absolute inset-0 bg-[#02040a]/90 backdrop-blur-2xl"
             />
 
+            {/* Modal */}
             <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 50 }}
-              className="relative w-full max-w-4xl max-h-[85vh] overflow-y-auto rounded-[2.5rem] bg-zinc-950 border border-white/10 shadow-2xl no-scrollbar"
+              initial={{
+                opacity: 0,
+                y: 40,
+                scale: 0.97,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+                scale: 1,
+              }}
+              exit={{
+                opacity: 0,
+                y: 30,
+                scale: 0.97,
+              }}
+              transition={{
+                duration: 0.45,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className="no-scrollbar relative max-h-[90vh] w-full max-w-6xl overflow-y-auto rounded-xl border border-white/10 bg-[#060a17] shadow-[0_40px_120px_rgba(0,0,0,0.6)]"
             >
-              {/* Modal Header Image */}
-              <div className="relative w-full h-75 md:h-100">
+              {/* Modal image */}
+              <div className="relative h-72 w-full overflow-hidden md:h-105">
                 <Image
                   src={selectedPost.image}
                   alt={selectedPost.title}
                   fill
                   className="object-cover"
                 />
-                <div className="absolute inset-0 bg-linear-to-t from-zinc-950 via-zinc-950/20 to-transparent" />
+
+                <div className="absolute inset-0 bg-linear-to-t from-[#060a17] via-[#060a17]/20 to-transparent" />
+
+                {/* Image blue overlay */}
+                <div className="absolute inset-0 bg-blue-950/15" />
+
+                {/* Close */}
                 <button
                   onClick={() => setSelectedPost(null)}
-                  className="absolute top-6 right-6 p-3 rounded-full bg-black/50 border border-white/10 text-white hover:bg-white/10 transition-all"
+                  aria-label="Close article"
+                  className="absolute right-6 top-6 flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-black/40 text-white backdrop-blur-xl transition-all duration-300 hover:border-white/20 hover:bg-white/10"
                 >
-                  <X size={20} />
+                  <X size={19} />
                 </button>
               </div>
 
-              {/* Modal Body Content */}
-              <div className="p-8 md:p-16 -mt-20 relative z-10">
-                <div className="flex flex-wrap items-center gap-6 mb-8 text-white/40 text-[10px] font-bold uppercase tracking-[0.2em]">
-                  <span className="px-3 py-1 rounded-full border border-white/10 bg-white/5 text-white/60">
-                    {selectedPost.category}
-                  </span>
+              {/* Modal content */}
+              <div className="relative z-10 -mt-8 px-7 pb-10 md:-mt-14 md:px-14 md:pb-14">
+                {/* Meta */}
+                <div className="mb-7 flex flex-wrap items-center gap-5 text-[9px] font-bold uppercase tracking-[0.16em] text-zinc-600">
                   <div className="flex items-center gap-2">
-                    <Calendar size={14} /> {selectedPost.date}
+                    <Calendar size={13} className="text-blue-400" />
+                    {selectedPost.date}
                   </div>
+
                   <div className="flex items-center gap-2">
-                    <Clock size={14} /> {selectedPost.readingTime}
+                    <Clock size={13} className="text-blue-400" />
+                    {selectedPost.readingTime}
                   </div>
                 </div>
 
-                <h2 className="text-4xl md:text-6xl font-bold tracking-tighter text-white mb-10 leading-[0.9]">
+                {/* Title */}
+                <h2 className="max-w-4xl text-4xl font-bold leading-[0.98] tracking-tight text-white md:text-6xl">
                   {selectedPost.title}
                 </h2>
 
-                <div className="prose prose-invert max-w-none">
-                  <p className="text-white/60 text-lg md:text-xl font-light leading-relaxed mb-8">
+                {/* Divider */}
+                <div className="my-9 h-px bg-linear-to-r from-blue-500/30 via-white/5 to-transparent" />
+
+                {/* Article */}
+                <div className="max-w-3xl">
+                  <p className="text-base font-light leading-8 text-zinc-400 md:text-xl md:leading-9">
                     {selectedPost.content}
                   </p>
-                  <div className="w-full h-px bg-white/5 my-12" />
-                  <div className="flex justify-between items-center">
-                    <span className="text-white/40 text-xs font-bold uppercase tracking-widest">
-                      Share this Insight
-                    </span>
-                    <button className="p-3 rounded-full bg-white/5 border border-white/10 text-white hover:bg-white hover:text-black transition-all">
-                      <Share2 size={18} />
-                    </button>
+
+                  <p className="mt-7 text-sm font-light leading-7 text-zinc-600 md:text-base">
+                    The digital landscape continues to evolve rapidly. Building
+                    products that remain useful, scalable, and intuitive
+                    requires a balance between thoughtful engineering,
+                    purposeful design, and a clear understanding of the people
+                    using them.
+                  </p>
+                </div>
+
+                {/* Share */}
+                <div className="mt-12 flex items-center justify-between border-t border-white/6 pt-7">
+                  <div>
+                    <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-zinc-600">
+                      Share this insight
+                    </p>
+
+                    <p className="mt-1 text-xs text-zinc-500">
+                      Spread the idea.
+                    </p>
                   </div>
+
+                  <button
+                    aria-label="Share article"
+                    className="group flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/3 text-zinc-400 transition-all duration-300 hover:border-blue-400/20 hover:bg-blue-500/10 hover:text-blue-400"
+                  >
+                    <Share2
+                      size={17}
+                      className="transition-transform duration-300 group-hover:rotate-6"
+                    />
+                  </button>
                 </div>
               </div>
             </motion.div>
