@@ -12,8 +12,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default:
-      "TaqwaSoftware | Web Solutions | App Development | AI Agents",
+    default: "TaqwaSoftware | Web Solutions | App Development | AI Agents",
     template: "%s | TaqwaSoftware",
   },
   description:
@@ -99,8 +98,6 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col bg-[#09090b]`}
       >
-        {/* Move the gradient to a fixed background div for better rendering */}
-        <div className="fixed inset-0 z-[-1] bg-linear-to-br from-zinc-900 via-[#050505] to-black" />
         <Navbar />
         <main className="grow">{children}</main>
         <Footer />

@@ -1,135 +1,220 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { ArrowDown } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import * as THREE from "three";
+// @ts-ignore - Vanta doesn't have official TS types
+import GLOBE from "vanta/dist/vanta.globe.min";
 import gsap from "gsap";
-import Link from "next/link";
+import {
+  ArrowUpRight,
+  BrainCircuit,
+  Database,
+  MonitorSmartphone,
+} from "lucide-react";
 
 export function HeroSection() {
   const headlineRef = useRef<HTMLHeadingElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const descriptionRef = useRef<HTMLParagraphElement>(null);
+  const bottomCardsRef = useRef<HTMLDivElement>(null);
+  const vantaRef = useRef<HTMLDivElement>(null);
+  const [vantaEffect, setVantaEffect] = useState<any>(null);
 
+  // Initialize Full-Screen Vanta Globe
+  useEffect(() => {
+    if (!vantaEffect && vantaRef.current) {
+      setVantaEffect(
+        GLOBE({
+          el: vantaRef.current,
+          THREE: THREE,
+          mouseControls: true,
+          touchControls: true,
+          gyroControls: false,
+          minHeight: 200.0,
+          minWidth: 200.0,
+          scale: 1.0,
+          scaleMobile: 1.0,
+          color: 0x3fafff,
+          color2: 0xffffff,
+          backgroundColor: 0x040814,
+          size: 1.1,
+        }),
+      );
+    }
+
+    // Cleanup Vanta instance on unmount
+    return () => {
+      if (vantaEffect) vantaEffect.destroy();
+    };
+  }, [vantaEffect]);
+
+  // GSAP Animations
   useEffect(() => {
     if (headlineRef.current) {
       const words = headlineRef.current.querySelectorAll(".word");
-      gsap.from(words, {
-        opacity: 0,
-        y: 100,
-        rotateX: -45,
-        duration: 1.2,
-        stagger: 0.1,
-        ease: "power4.out",
-        delay: 0.5,
-      });
+      gsap.fromTo(
+        words,
+        { opacity: 0, y: 60 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1.2,
+          stagger: 0.1,
+          ease: "power4.out",
+          delay: 0.3,
+        },
+      );
+    }
+
+    if (descriptionRef.current) {
+      gsap.fromTo(
+        descriptionRef.current,
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: "power3.out",
+          delay: 1.35,
+        },
+      );
+    }
+
+    if (bottomCardsRef.current) {
+      gsap.fromTo(
+        bottomCardsRef.current.children,
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          stagger: 0.2,
+          ease: "power3.out",
+          delay: 1,
+        },
+      );
     }
   }, []);
 
-  const scrollToWork = () => {
-    document.getElementById("works")?.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
-    <section
-      ref={containerRef}
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-4 pt-16"
-    >
-      {/* 1. Background Video Layer */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-full h-full object-cover scale-110 opacity-40 brightness-75"
-        >
-          <source src="/loopbg.mp4" type="video/mp4" />
-        </video>
-        {/* Subtle Gradient Overlays for Readability */}
-        <div className="absolute inset-0 bg-linear-to-b from-black via-transparent to-black" />
-        <div className="absolute inset-0 bg-black/20 backdrop-blur-[1px]" />
-      </div>
+    <section className="relative min-h-screen flex flex-col justify-between overflow-hidden bg-[#040814] pt-24 pb-10">
+      {/* 1. Full-Screen Vanta Background Layer */}
+      <div
+        ref={vantaRef}
+        className="absolute inset-0 z-0 pointer-events-auto"
+      />
 
-      {/* 2. Ambient Glow (kept for consistency) */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-150 h-150 bg-white/5 rounded-full blur-[120px] pointer-events-none z-1" />
+      {/* 2. Gradient Overlay to ensure text readability */}
+      <div className="absolute inset-0 z-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_0%,#040814_80%)] opacity-100" />
 
-      {/* 3. Hero Content Container */}
-      <div className="max-w-7xl mx-auto text-center relative z-10">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="inline-flex items-center gap-2 mb-8 px-4 py-1.5 rounded-full border border-zinc-700 bg-zinc-900/50 backdrop-blur-sm"
-        >
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
-          </span>
-          <span className="text-xs font-bold tracking-[0.2em] uppercase text-zinc-400">
-            Available for New Projects
-          </span>
-        </motion.div>
-
-        <h1
-          ref={headlineRef}
-          className="text-5xl md:text-7xl lg:text-9xl font-bold mb-8 leading-[0.9] tracking-tighter text-white perspective-1000"
-        >
-          <span className="word inline-block">Building</span>{" "}
-          <span className="word inline-block">the</span>{" "}
-          <span className="word inline-block text-zinc-400">future</span>
-          <br />
-          <span className="word inline-block">of</span>{" "}
-          <span className="word inline-block">software</span>
-        </h1>
-
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.4, duration: 0.8 }}
-          className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto mb-12 leading-relaxed font-light"
-        >
-          We transform visionary ideas into exceptional digital experiences
-          through innovative technology and elegant engineering.
-        </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.6, duration: 0.6 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-        >
-          <Button
-            size="lg"
-            className="md:h-14 h-12 px-10 bg-white/90 text-black hover:bg-white/95 rounded-full font-bold md:text-base cursor-pointer transition-all duration-200 shadow-2xl shadow-white/10"
-            onClick={scrollToWork}
+      {/* 3. Main Content Layer (Z-10) */}
+      <div className="container mx-auto w-full px-6 relative z-10 grow flex flex-col items-center justify-center pointer-events-none">
+        {/* Headline Container (Centered Vertically) */}
+        <div className="text-center w-full md:mt-auto mt-10 mb-auto">
+          <h1
+            ref={headlineRef}
+            className="text-5xl md:text-7xl lg:text-[4.5rem] xl:text-[5.5rem] font-bold leading-[1.05] tracking-tight text-white/95 max-w-7xl mx-auto uppercase drop-shadow-2xl"
           >
-            Sample Works
-            <ArrowDown className="h-5 w-5" />
-          </Button>
-          <Link target="_blank" href={"https://wa.me/8801709190412"}>
-            <Button
-              size="lg"
-              variant="outline"
-              className="md:h-14 h-12 px-10 border-zinc-700 text-white/90 hover:bg-zinc-900 rounded-full font-bold md:text-base bg-transparent transition-all backdrop-blur-sm"
-            >
-              Get Started
-            </Button>
-          </Link>
-        </motion.div>
-      </div>
+            <div className="overflow-hidden inline-block">
+              <span className="word inline-block">Engineering</span>
+            </div>{" "}
+            <div className="overflow-hidden inline-block">
+              <span className="word inline-block">software</span>
+            </div>{" "}
+            <div className="overflow-hidden inline-block">
+              <span className="word inline-block">&</span>
+            </div>{" "}
+            <div className="overflow-hidden inline-block">
+              <span className="word inline-block">AI</span>
+            </div>{" "}
+            <br className="hidden md:block" />
+            <div className="overflow-hidden inline-block">
+              <span className="word inline-block">solutions</span>
+            </div>{" "}
+            <div className="overflow-hidden inline-block">
+              <span className="word inline-block">for</span>
+            </div>{" "}
+            <div className="overflow-hidden inline-block">
+              <span className="word inline-block">the</span>
+            </div>{" "}
+            <div className="overflow-hidden inline-block">
+              <span className="word inline-block">top</span>
+            </div>{" "}
+            <div className="overflow-hidden inline-block">
+              <span className="word inline-block">1%</span>
+            </div>
+          </h1>
 
-      {/* 4. Bottom Scroll Hint */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.5 }}
-        transition={{ delay: 2, duration: 1 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2"
-      >
-        <span className="text-[10px] uppercase tracking-[0.3em] text-white/70 font-bold">
-          Scroll
-        </span>
-      </motion.div>
+          <p
+            ref={descriptionRef}
+            className="text-white/95 font-medium text-base md:text-lg lg:text-xl max-w-3xl mx-auto mt-8 leading-relaxed"
+          >
+            We build high-performance software, intelligent AI systems, and
+            scalable digital solutions that help ambitious businesses move
+            faster and stay ahead.
+          </p>
+        </div>
+
+        {/* Bottom Feature Navigation Cards */}
+        {/* 'pointer-events-auto' allows these cards to be clickable over the background */}
+        <div
+          ref={bottomCardsRef}
+          className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-7xl mx-auto border-t border-white/10 pt-10 mt-auto pointer-events-auto"
+        >
+          {/* Card 1 */}
+          <div className="flex items-center justify-between group cursor-pointer border border-white/10 bg-[#040814]/40 backdrop-blur-md hover:bg-white/5 p-6 rounded-xl transition-colors duration-300">
+            <div className="flex items-center gap-6">
+              <div className="w-16 h-16 bg-blue-500/10 border border-blue-500/20 rounded-2xl flex items-center justify-center text-blue-400 transform group-hover:scale-110 transition-transform duration-300">
+                <MonitorSmartphone size={32} />
+              </div>
+              <div className="text-left">
+                <h3 className="text-white font-bold text-xl md:text-2xl group-hover:text-blue-400 transition-colors">
+                  Web & App
+                </h3>
+                <p className="text-zinc-400 text-sm md:text-base mt-1">
+                  Design, Websites, Apps
+                </p>
+              </div>
+            </div>
+            <ArrowUpRight className="text-zinc-500 group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300 w-6 h-6" />
+          </div>
+
+          {/* Card 2 */}
+          <div className="flex items-center justify-between group cursor-pointer border border-white/10 bg-[#040814]/40 backdrop-blur-md hover:bg-white/5 p-6 rounded-xl transition-colors duration-300">
+            <div className="flex items-center gap-6">
+              <div className="w-16 h-16 bg-cyan-500/10 border border-cyan-500/20 rounded-2xl flex items-center justify-center text-cyan-400 transform group-hover:scale-110 transition-transform duration-300">
+                <BrainCircuit size={32} />
+              </div>
+              <div className="text-left">
+                <h3 className="text-white font-bold text-xl md:text-2xl group-hover:text-cyan-400 transition-colors">
+                  Agentic AI
+                </h3>
+                <p className="text-zinc-400 text-sm md:text-base mt-1">
+                  Smart Automation, LLMs
+                </p>
+              </div>
+            </div>
+            <ArrowUpRight className="text-zinc-500 group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300 w-6 h-6" />
+          </div>
+
+          {/* Card 3 */}
+          <div className="flex items-center justify-between group cursor-pointer border border-white/10 bg-[#040814]/40 backdrop-blur-md hover:bg-white/5 p-6 rounded-xl transition-colors duration-300">
+            <div className="flex items-center gap-6">
+              <div className="w-16 h-16 bg-purple-500/10 border border-purple-500/20 rounded-2xl flex items-center justify-center text-purple-400 transform group-hover:scale-110 transition-transform duration-300">
+                <Database size={32} />
+              </div>
+              <div className="text-left">
+                <h3 className="text-white font-bold text-xl md:text-2xl group-hover:text-purple-400 transition-colors">
+                  Enterprise
+                </h3>
+                <p className="text-zinc-400 text-sm md:text-base mt-1">
+                  Odoo ERP, Backend
+                </p>
+              </div>
+            </div>
+            <ArrowUpRight className="text-zinc-500 group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300 w-6 h-6" />
+          </div>
+        </div>
+      </div>
     </section>
   );
 }
