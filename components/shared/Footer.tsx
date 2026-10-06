@@ -9,9 +9,11 @@ import {
   ArrowUpRight,
   Mail,
   MapPin,
-  ArrowUp,
 } from "lucide-react";
 import Link from "next/link";
+
+const focusRing =
+  "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-400";
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -58,8 +60,22 @@ const Footer: React.FC = () => {
     },
   ];
 
+  const scrollToTop = () => {
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+  };
+
   return (
-    <footer className="relative overflow-hidden border-t border-white/6 bg-[#040814] px-4 pb-8 pt-16 md:px-6 md:pt-24">
+    <footer className="relative overflow-hidden bg-[#040814] px-4 pb-8 pt-16 md:px-6 md:pt-24">
+      {/* Top hairline */}
+      <div
+        aria-hidden
+        className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-blue-400/40 to-transparent"
+      />
+
       {/* Ambient Background */}
       <div className="pointer-events-none absolute -left-60 bottom-0 h-125 w-125 rounded-full bg-blue-600/8 blur-[140px]" />
 
@@ -82,10 +98,13 @@ const Footer: React.FC = () => {
 
       <div className="relative z-10 mx-auto container px-6">
         {/* Footer Main Grid */}
-        <div className="grid grid-cols-1 gap-14 border-b border-white/6 pb-14 md:grid-cols-2 lg:grid-cols-4 lg:gap-10 lg:pb-20">
+        <div className="grid grid-cols-1 gap-12 border-b border-white/8 pb-14 md:grid-cols-2 lg:grid-cols-[1.6fr_0.8fr_1.3fr] lg:gap-16 lg:pb-20">
           {/* Brand */}
-          <div className="space-y-7 md:col-span-2 lg:col-span-2">
-            <Link href="/" className="group inline-flex items-center gap-3">
+          <div className="space-y-7 md:col-span-2 lg:col-span-1">
+            <Link
+              href="/"
+              className={`group inline-flex items-center gap-3 rounded-lg ${focusRing}`}
+            >
               <div className="flex h-11 w-11 rotate-3 items-center justify-center rounded-xl bg-white transition-all duration-300 group-hover:rotate-12 group-hover:bg-blue-400">
                 <span className="text-lg font-black text-black">T</span>
               </div>
@@ -95,135 +114,146 @@ const Footer: React.FC = () => {
               </span>
             </Link>
 
-            <p className="max-w-md text-base font-light leading-7 text-zinc-500">
+            <p className="max-w-md text-base leading-7 text-zinc-400">
               Excellence in engineering, elegance in design. We build digital
               products, intelligent systems, and software experiences designed
               to stand the test of time.
             </p>
 
             {/* Socials */}
-            <div className="flex gap-3">
+            <ul className="flex flex-wrap gap-3">
               {social.map(({ href, icon: Icon, name }) => (
-                <Link
-                  key={name}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={name}
-                  className="group flex h-11 w-11 items-center justify-center rounded-full border border-white/8 bg-white/2.5 text-zinc-500 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-blue-400/20 hover:bg-blue-500/10 hover:text-blue-400"
-                >
-                  <Icon className="h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          {/* Navigation */}
-          <div>
-            <div className="mb-7 flex items-center gap-3">
-              <span className="h-1.5 w-1.5 rounded-full bg-blue-400" />
-
-              <h4 className="text-[9px] font-bold uppercase tracking-[0.25em] text-zinc-400">
-                Navigation
-              </h4>
-            </div>
-
-            <ul className="space-y-4">
-              {menu.map((item) => (
-                <li key={item.name}>
+                <li key={name}>
                   <Link
-                    href={item.href}
-                    className="group inline-flex items-center text-sm font-medium text-zinc-500 transition-colors duration-300 hover:text-white"
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={name}
+                    className={`group flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/3 text-zinc-400 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-blue-400/40 hover:bg-blue-500/10 hover:text-blue-300 hover:shadow-[0_10px_24px_-10px_rgba(96,165,250,0.5)] ${focusRing}`}
                   >
-                    {item.name}
-
-                    <ArrowUpRight className="ml-2 h-3 w-3 -translate-x-1 translate-y-1 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100" />
+                    <Icon className="h-4.5 w-4.5 transition-transform duration-300 group-hover:scale-110" />
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
+          {/* Navigation */}
+          <nav aria-label="Footer">
+            <FooterHeading>Navigation</FooterHeading>
+
+            <ul className="space-y-1">
+              {menu.map((item) => (
+                <li key={item.name}>
+                  <Link
+                    href={item.href}
+                    className={`group relative flex items-center rounded-lg py-2 text-[15px] font-medium text-zinc-400 transition-all duration-300 hover:pl-4 hover:text-white ${focusRing}`}
+                  >
+                    <span
+                      aria-hidden
+                      className="absolute left-0 top-1/2 h-px w-0 -translate-y-1/2 bg-blue-400 transition-all duration-300 group-hover:w-2.5"
+                    />
+
+                    {item.name}
+
+                    <ArrowUpRight className="ml-2 h-3.5 w-3.5 -translate-x-1 translate-y-1 text-blue-400 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
           {/* Contact */}
           <div>
-            <div className="mb-7 flex items-center gap-3">
-              <span className="h-1.5 w-1.5 rounded-full bg-cyan-400" />
+            <FooterHeading>Contact</FooterHeading>
 
-              <h4 className="text-[9px] font-bold uppercase tracking-[0.25em] text-zinc-400">
-                Contact
-              </h4>
-            </div>
-
-            <div className="space-y-6">
+            <div className="space-y-3">
               {/* Email */}
-              <div className="group">
-                <div className="mb-2 flex items-center gap-2">
-                  <Mail className="h-3.5 w-3.5 text-blue-400/70" />
+              <a
+                href="mailto:admin@taqwasoftware.com"
+                className={`group flex items-center gap-4 rounded-2xl border border-white/8 bg-white/3 p-4 transition-all duration-300 hover:border-blue-400/30 hover:bg-blue-500/6 ${focusRing}`}
+              >
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-400/10 text-blue-400 transition-colors duration-300 group-hover:bg-blue-400 group-hover:text-[#040814]">
+                  <Mail className="h-4.5 w-4.5" />
+                </span>
 
-                  <p className="text-[9px] font-bold uppercase tracking-[0.15em] text-zinc-600">
+                <span className="min-w-0 flex-1">
+                  <span className="block text-xs font-semibold text-zinc-500">
                     Email
-                  </p>
-                </div>
+                  </span>
 
-                <a
-                  href="mailto:admin@taqwasoftware.com"
-                  className="text-sm font-medium text-zinc-400 transition-colors hover:text-white"
-                >
-                  admin@taqwasoftware.com
-                </a>
-              </div>
+                  <span className="mt-0.5 block truncate text-sm font-medium text-zinc-200 transition-colors group-hover:text-white">
+                    admin@taqwasoftware.com
+                  </span>
+                </span>
+
+                <ArrowUpRight className="h-4 w-4 shrink-0 text-zinc-600 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-blue-400" />
+              </a>
 
               {/* Location */}
-              <div>
-                <div className="mb-2 flex items-center gap-2">
-                  <MapPin className="h-3.5 w-3.5 text-cyan-400/70" />
+              <div className="flex items-start gap-4 rounded-2xl border border-white/8 bg-white/3 p-4">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-cyan-400/10 text-cyan-400">
+                  <MapPin className="h-4.5 w-4.5" />
+                </span>
 
-                  <p className="text-[9px] font-bold uppercase tracking-[0.15em] text-zinc-600">
+                <div>
+                  <p className="text-xs font-semibold text-zinc-500">
                     Global HQ
                   </p>
-                </div>
 
-                <p className="text-sm font-medium leading-6 text-zinc-400">
-                  Innovation Tower, DIFC
-                  <br />
-                  Dhaka, Bangladesh
-                </p>
+                  <p className="mt-0.5 text-sm font-medium leading-6 text-zinc-200">
+                    Innovation Tower, DIFC
+                    <br />
+                    Dhaka, Bangladesh
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="flex flex-col items-center justify-between gap-7 pt-8 md:flex-row">
-          <div className="flex flex-col items-center gap-2 md:items-start">
-            <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-zinc-400">
+        <div className="flex flex-col items-center justify-between gap-6 pt-8 md:flex-row">
+          <div className="flex flex-col items-center gap-1.5 text-center md:items-start md:text-left">
+            <p className="text-sm font-semibold text-zinc-300">
               © {currentYear} Taqwa Software
             </p>
 
-            <p className="text-[9px] uppercase tracking-[0.12em] text-zinc-500">
+            <p className="text-[13px] text-zinc-500">
               Engineering the future, one product at a time.
             </p>
           </div>
 
-          <div className="flex items-center gap-7">
-            <Link
-              href="/privacy-policy"
-              className="text-[9px] font-bold uppercase tracking-[0.15em] text-zinc-400 transition-colors hover:text-white"
-            >
-              Privacy Policy
-            </Link>
+          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
+            <div className="flex items-center gap-6">
+              <Link
+                href="/privacy-policy"
+                className={`rounded text-[13px] font-medium text-zinc-400 transition-colors hover:text-white ${focusRing}`}
+              >
+                Privacy Policy
+              </Link>
 
-            <Link
-              href="/terms-of-service"
-              className="text-[9px] font-bold uppercase tracking-[0.15em] text-zinc-400 transition-colors hover:text-white"
-            >
-              Terms
-            </Link>
+              <span aria-hidden className="h-3 w-px bg-white/15" />
+
+              <Link
+                href="/terms-of-service"
+                className={`rounded text-[13px] font-medium text-zinc-400 transition-colors hover:text-white ${focusRing}`}
+              >
+                Terms
+              </Link>
+            </div>
           </div>
         </div>
       </div>
     </footer>
   );
 };
+
+const FooterHeading = ({ children }: { children: React.ReactNode }) => (
+  <h4 className="mb-6 flex items-center gap-3 text-sm font-semibold tracking-wide text-white">
+    {children}
+    <span aria-hidden className="h-px flex-1 bg-white/10" />
+  </h4>
+);
 
 export default Footer;
