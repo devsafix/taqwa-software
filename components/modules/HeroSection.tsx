@@ -104,7 +104,7 @@ export function HeroSection() {
       />
 
       {/* 2. Gradient Overlay to ensure text readability */}
-      <div className="absolute inset-0 z-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_0%,#040814_80%)] opacity-100" />
+      <div className="absolute inset-0 z-0 pointer-events-none bg-black opacity-70" />
 
       {/* 3. Main Content Layer (Z-10) */}
       <div className="container mx-auto w-full px-6 relative z-10 grow flex flex-col items-center justify-center pointer-events-none">
@@ -158,7 +158,7 @@ export function HeroSection() {
         {/* 'pointer-events-auto' allows these cards to be clickable over the background */}
         <div
           ref={bottomCardsRef}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-7xl mx-auto border-t border-white/10 pt-10 mt-auto pointer-events-auto"
+          className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-7xl mx-auto mt-auto pointer-events-auto"
         >
           {/* Card 1 */}
           <div className="flex items-center justify-between group cursor-pointer border border-white/10 bg-[#040814]/40 backdrop-blur-md hover:bg-white/5 p-6 rounded-xl transition-colors duration-300">
