@@ -46,7 +46,7 @@ const Navbar = () => {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? "bg-[#040814]/85 backdrop-blur-xl py-4" : "bg-transparent py-6"}`}
     >
-      <div className="mx-auto w-full container px-5 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full container px-6">
         <div className="flex items-center justify-between">
           <Link
             href="/"

@@ -6,11 +6,13 @@ import { Portfolio } from "@/components/modules/Portfolio";
 import { ServicesSection } from "@/components/modules/ServicesSection";
 import { StatsSection } from "@/components/modules/StatsSection";
 import Newsletter from "@/components/shared/Newsletter";
+import { AboutSection } from "@/components/modules/AboutSection";
 
 export default function Home() {
   return (
     <main className="min-h-screen">
       <HeroSection />
+      <AboutSection />
       <TechStack />
       <ServicesSection />
       <Portfolio />
