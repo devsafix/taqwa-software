@@ -126,6 +126,7 @@ const Navbar = () => {
             </Link>
 
             <div className="hidden items-center gap-10 lg:flex xl:gap-14">
+              <NavLink href="/#about">About</NavLink>
               {(
                 [
                   { key: "services", label: "Services" },
@@ -172,8 +173,7 @@ const Navbar = () => {
                 </div>
               ))}
 
-              <NavLink href="#projects">Projects</NavLink>
-              <NavLink href="#blog">Blog</NavLink>
+              <NavLink href="/#projects">Projects</NavLink>
             </div>
 
             <div className="hidden lg:block">
@@ -214,6 +214,14 @@ const Navbar = () => {
               className="absolute left-0 right-0 top-full max-h-[calc(100dvh-80px)] overflow-y-auto overscroll-contain border-t border-white/10 bg-[#040814]/98 backdrop-blur-2xl lg:hidden"
             >
               <div className="mx-auto w-full max-w-175 px-6 py-6">
+                <Link
+                  href="/#about"
+                  onClick={closeMobileMenu}
+                  className="block border-b border-white/10 py-5 text-base font-semibold uppercase tracking-wide text-white transition-colors hover:text-blue-400"
+                >
+                  About
+                </Link>
+
                 <MobileMenuItem
                   title="Services"
                   open={mobileSubmenu === "services"}
@@ -305,20 +313,20 @@ const Navbar = () => {
                 </AnimatePresence>
 
                 <Link
-                  href="#projects"
+                  href="/#projects"
                   onClick={closeMobileMenu}
                   className="block border-b border-white/10 py-5 text-base font-semibold uppercase tracking-wide text-white transition-colors hover:text-blue-400"
                 >
                   Projects
                 </Link>
 
-                <Link
+                {/* <Link
                   href="#blog"
                   onClick={closeMobileMenu}
                   className="block border-b border-white/10 py-5 text-base font-semibold uppercase tracking-wide text-white transition-colors hover:text-blue-400"
                 >
                   Blog
-                </Link>
+                </Link> */}
 
                 <Link
                   target="_blank"

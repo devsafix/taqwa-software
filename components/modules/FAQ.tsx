@@ -1,9 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus, Minus, ArrowUpRight, MessageCircle } from "lucide-react";
+import { Plus, Minus } from "lucide-react";
 import Image from "next/image";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const faqs = [
   {
@@ -34,73 +36,66 @@ const faqs = [
 
 export function FAQ() {
   const [activeIndex, setActiveIndex] = useState<number | null>(0);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      // Header animation
+      gsap.fromTo(
+        ".service-header",
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.15,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+          },
+        },
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section className="relative overflow-hidden py-20 md:py-24">
-      {/* Ambient background glows */}
-      <div className="pointer-events-none absolute -left-48 top-1/3 h-125 w-125 rounded-full bg-blue-600/8 blur-[140px]" />
-
-      <div className="pointer-events-none absolute -right-48 bottom-0 h-125 w-125 rounded-full bg-cyan-500/6 blur-[140px]" />
-
-      {/* Technical grid */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.025]"
-        style={{
-          backgroundImage: `
-            linear-gradient(rgba(255,255,255,0.8) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,0.8) 1px, transparent 1px)
-          `,
-          backgroundSize: "60px 60px",
-        }}
-      />
-
-      {/* Center fade */}
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,#040814_82%)]" />
-
-      {/* Top divider */}
-      <div className="absolute left-1/2 top-0 h-px w-full -translate-x-1/2 bg-linear-to-r from-transparent via-white/10 to-transparent" />
-
+    <section
+      ref={sectionRef}
+      className="relative isolate overflow-hidden bg-black/50 py-20 md:py-24"
+    >
+      {/* Light beam under the Project section */}
+      <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-blue-400/40 to-transparent" />
       <div className="relative z-10 mx-auto px-6 container">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="mb-16 text-center md:mb-20"
-        >
-          {/* Eyebrow */}
-          <div className="mb-5 flex items-center justify-center gap-3">
+        <div className="mb-16 flex flex-col items-center justify-center text-center lg:mb-20">
+          <div className="service-header mb-6 inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/4 py-2 pl-3 pr-4 backdrop-blur-md">
             <span className="relative flex h-2.5 w-2.5 items-center justify-center">
-              <span className="absolute h-2.5 w-2.5 animate-ping rounded-full bg-blue-500/40" />
+              <span className="absolute h-2.5 w-2.5 rounded-full bg-blue-500/40 motion-safe:animate-ping" />
               <span className="relative h-1.5 w-1.5 rounded-full bg-blue-400 shadow-[0_0_12px_rgba(59,130,246,0.9)]" />
             </span>
 
-            <span className="text-xs font-bold uppercase tracking-[0.25em] text-zinc-400">
+            <span className="text-xs font-bold uppercase tracking-[0.25em] text-blue-300">
               Common Questions
             </span>
           </div>
 
-          {/* Heading */}
-          <h2 className="text-4xl font-bold tracking-tight text-white md:text-5xl lg:text-6xl">
+          <h2 className="service-header max-w-4xl text-balance text-4xl font-bold uppercase tracking-tight text-white md:text-5xl lg:text-6xl">
             Frequently{" "}
-            <span className="bg-linear-to-r from-blue-400 via-blue-300 to-cyan-400 bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-white via-blue-100 to-blue-400 bg-clip-text text-transparent">
               Asked
             </span>
           </h2>
 
-          <p className="mx-auto mt-6 max-w-2xl text-sm leading-7 text-zinc-500 md:text-base">
+          <p className="service-header mt-6 max-w-2xl text-pretty text-base leading-7 text-zinc-400 md:text-lg md:leading-8">
             Everything you need to know about our process, technology, and
             approach to building digital products.
           </p>
-
-          {/* Decorative line */}
-          <div className="mt-8 flex items-center justify-center gap-3">
-            <span className="h-px w-10 bg-linear-to-r from-transparent to-blue-500/50" />
-            <span className="h-1 w-1 rounded-full bg-blue-500" />
-            <span className="h-px w-10 bg-linear-to-l from-transparent to-blue-500/50" />
-          </div>
-        </motion.div>
+        </div>
 
         {/* Main Content */}
         <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
@@ -120,7 +115,7 @@ export function FAQ() {
                     delay: index * 0.1,
                     ease: "easeOut",
                   }}
-                  className={`group relative overflow-hidden rounded-2xl border transition-colors duration-500 ${
+                  className={`group relative overflow-hidden rounded-3xl border transition-colors duration-500 ${
                     isActive
                       ? "border-blue-400/20 bg-white/4.5 shadow-[0_20px_60px_rgba(0,0,0,0.2)]"
                       : "border-white/8 bg-white/2 hover:border-white/15 hover:bg-white/[0.035]"
@@ -232,7 +227,7 @@ export function FAQ() {
                 <div className="absolute -inset-5 rounded-[2.5rem] bg-blue-500/10 blur-[50px]" />
 
                 {/* Image */}
-                <div className="relative aspect-4/3 overflow-hidden rounded-xl border border-white/10 bg-zinc-900 shadow-[0_30px_80px_rgba(0,0,0,0.35)]">
+                <div className="relative aspect-4/3 overflow-hidden rounded-3xl border border-white/10 bg-zinc-900 shadow-[0_30px_80px_rgba(0,0,0,0.35)]">
                   <Image
                     src={faqs[activeIndex ?? 0]?.image}
                     alt={faqs[activeIndex ?? 0]?.question}

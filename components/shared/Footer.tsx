@@ -70,12 +70,6 @@ const Footer: React.FC = () => {
 
   return (
     <footer className="relative overflow-hidden bg-[#040814] px-4 pb-8 pt-16 md:px-6 md:pt-24">
-      {/* Top hairline */}
-      <div
-        aria-hidden
-        className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-blue-400/40 to-transparent"
-      />
-
       {/* Ambient Background */}
       <div className="pointer-events-none absolute -left-60 bottom-0 h-125 w-125 rounded-full bg-blue-600/8 blur-[140px]" />
 

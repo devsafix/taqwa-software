@@ -72,7 +72,8 @@ export function AboutSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative isolate overflow-hidden bg-black/50 py-20 lg:py-24"
+      id="about"
+      className="relative isolate overflow-hidden bg-black/50 py-20 lg:py-32"
     >
       {/* ───────── Background ───────── */}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
@@ -138,31 +139,8 @@ export function AboutSection() {
               </p>
             </div>
 
-            {/* Expertise chips (taken from the copy above) */}
-            <ul className="gsap-text mt-9 grid w-full max-w-xl grid-cols-1 gap-3 min-[420px]:grid-cols-2">
-              {expertise.map(({ icon: Icon, label }) => (
-                <li
-                  key={label}
-                  className="group flex items-center gap-3 rounded-2xl border border-white/8 bg-white/3 px-4 py-3 backdrop-blur-sm transition-all duration-300 hover:border-blue-400/30 hover:bg-blue-500/8"
-                >
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-400/10 text-blue-400 transition-colors duration-300 group-hover:bg-blue-400 group-hover:text-[#040814]">
-                    <Icon size={17} />
-                  </span>
-
-                  <span className="text-sm font-medium text-zinc-200">
-                    {label}
-                  </span>
-                </li>
-              ))}
-            </ul>
-
             {/* Concluding Statement */}
             <div className="gsap-text relative mt-9 w-full max-w-xl overflow-hidden rounded-2xl border border-white/8 bg-linear-to-r from-blue-500/10 via-white/3 to-transparent py-5 pl-6 pr-5">
-              <span
-                aria-hidden
-                className="absolute inset-y-0 left-0 w-0.75 bg-linear-to-b from-blue-400 to-cyan-400"
-              />
-
               <p className="text-sm font-bold uppercase leading-relaxed tracking-widest text-white md:text-base">
                 Taqwa Software — Where engineering excellence meets digital
                 innovation.
@@ -171,7 +149,7 @@ export function AboutSection() {
           </div>
 
           {/* ───────── Right Column ───────── */}
-          <div className="about-image relative z-10 w-full">
+          <div className="about-image relative z-10 w-full py-10">
             {/* Orbit rings behind the image */}
             <div
               aria-hidden
