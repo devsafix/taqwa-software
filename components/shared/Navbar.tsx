@@ -12,6 +12,7 @@ import {
   Database,
   Code2,
   Sparkles,
+  Smartphone,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -337,29 +338,30 @@ const MegaMenu = ({ onNavigate }: { onNavigate: () => void }) => {
 
             <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
               <MegaCard
-                icon={<MonitorSmartphone size={22} />}
+                icon={<Sparkles size={22} />}
                 title="Product Design"
                 description="UX/UI built around product and business goals"
               />
               <MegaCard
                 icon={<MonitorSmartphone size={22} />}
-                title="Web Design"
+                title="Web Development"
                 description="End-to-end websites, from design to launch"
               />
               <MegaCard
-                icon={<Sparkles size={22} />}
-                title="Branding"
-                description="Strategy + identity for ambitious digital-first brands"
+                icon={<Smartphone size={22} />}
+                title="App Development"
+                description="Native and cross-platform mobile applications"
               />
               <MegaCard
                 icon={<Code2 size={22} />}
-                title="Web Development"
-                description="From MVPs to scalable, robust digital products"
+                title="Enterprise & ERP Solutions"
+                description="Scalable business solutions for growing companies"
               />
             </div>
 
             <Link
-              href="#"
+              href="https://wa.me/8801709190412"
+              target="_blank"
               className={`group relative mt-6 block overflow-hidden rounded-2xl bg-[#090d24] p-6 text-white transition-shadow duration-300 hover:shadow-[0_20px_40px_-12px_rgba(9,13,36,0.5)] ${focusRing}`}
             >
               <div
@@ -389,7 +391,7 @@ const MegaMenu = ({ onNavigate }: { onNavigate: () => void }) => {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 gap-8 rounded-2xl bg-slate-50 p-6 sm:grid-cols-2 lg:p-7">
+          <div className="grid grid-cols-1 gap-8 rounded-2xl bg-slate-100 p-6 sm:grid-cols-2 lg:p-7">
             <div>
               <MegaHeading>Design</MegaHeading>
 
@@ -408,12 +410,12 @@ const MegaMenu = ({ onNavigate }: { onNavigate: () => void }) => {
               <MegaHeading>Development</MegaHeading>
 
               <ul className="space-y-1">
-                <MegaTextLink title="AI Integration" />
+                <MegaTextLink title="Web Development" />
                 <MegaTextLink title="Mobile App Development" />
                 <MegaTextLink title="MVP Development" />
                 <MegaTextLink title="Software Development" />
+                <MegaTextLink title="AI Integration" />
                 <MegaTextLink title="CMS Development" />
-                <MegaTextLink title="Cloud Development" />
                 <MegaTextLink title="API Development" />
               </ul>
             </div>
@@ -467,18 +469,10 @@ const MegaCard = ({
 
 const MegaTextLink = ({ title }: { title: string }) => {
   return (
-    <li>
-      <Link
-        href="#"
-        className={`group -mx-3 flex items-center justify-between rounded-lg px-3 py-2 text-[15px] font-semibold text-[#090d24] transition-colors duration-200 hover:bg-white hover:text-blue-600 hover:shadow-sm ${focusRing}`}
-      >
-        {title}
-
-        <ArrowUpRight
-          size={14}
-          className="-translate-x-1 opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100"
-        />
-      </Link>
+    <li
+      className={`group -mx-3 flex items-center justify-between rounded-lg px-3 py-2 text-[15px] font-semibold text-[#090d24] transition-colors duration-200 hover:text-blue-600 ${focusRing}`}
+    >
+      {title}
     </li>
   );
 };
