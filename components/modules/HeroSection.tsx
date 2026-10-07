@@ -161,7 +161,7 @@ export function HeroSection() {
           className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-7xl mx-auto mt-auto pointer-events-auto"
         >
           {/* Card 1 */}
-          <div className="flex items-center justify-between group cursor-pointer border border-white/10 bg-[#040814]/40 backdrop-blur-md hover:bg-white/5 p-6 rounded-xl transition-colors duration-300">
+          <div className="flex items-center justify-between group cursor-pointer border border-white/10 bg-[#040814]/40 backdrop-blur-md hover:bg-white/5 p-6 rounded-3xl transition-colors duration-300">
             <div className="flex items-center gap-6">
               <div className="w-16 h-16 bg-blue-500/10 border border-blue-500/20 rounded-2xl flex items-center justify-center text-blue-400 transform group-hover:scale-110 transition-transform duration-300">
                 <MonitorSmartphone size={32} />
@@ -179,7 +179,7 @@ export function HeroSection() {
           </div>
 
           {/* Card 2 */}
-          <div className="flex items-center justify-between group cursor-pointer border border-white/10 bg-[#040814]/40 backdrop-blur-md hover:bg-white/5 p-6 rounded-xl transition-colors duration-300">
+          <div className="flex items-center justify-between group cursor-pointer border border-white/10 bg-[#040814]/40 backdrop-blur-md hover:bg-white/5 p-6 rounded-3xl transition-colors duration-300">
             <div className="flex items-center gap-6">
               <div className="w-16 h-16 bg-cyan-500/10 border border-cyan-500/20 rounded-2xl flex items-center justify-center text-cyan-400 transform group-hover:scale-110 transition-transform duration-300">
                 <BrainCircuit size={32} />
@@ -197,7 +197,7 @@ export function HeroSection() {
           </div>
 
           {/* Card 3 */}
-          <div className="flex items-center justify-between group cursor-pointer border border-white/10 bg-[#040814]/40 backdrop-blur-md hover:bg-white/5 p-6 rounded-xl transition-colors duration-300">
+          <div className="flex items-center justify-between group cursor-pointer border border-white/10 bg-[#040814]/40 backdrop-blur-md hover:bg-white/5 p-6 rounded-3xl transition-colors duration-300">
             <div className="flex items-center gap-6">
               <div className="w-16 h-16 bg-purple-500/10 border border-purple-500/20 rounded-2xl flex items-center justify-center text-purple-400 transform group-hover:scale-110 transition-transform duration-300">
                 <Database size={32} />

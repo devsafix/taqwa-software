@@ -7,6 +7,9 @@ import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+const focusRing =
+  "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-400";
+
 const faqs = [
   {
     question: "What technologies do you specialize in?",
@@ -63,13 +66,42 @@ export function FAQ() {
     return () => ctx.revert();
   }, []);
 
+  const preview = faqs[activeIndex ?? 0];
+
   return (
     <section
       ref={sectionRef}
-      className="relative isolate overflow-hidden bg-black/50 py-20 md:py-24"
+      className="relative isolate overflow-hidden bg-black/50 py-20 lg:py-24"
     >
-      {/* Light beam under the Project section */}
-      <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-blue-400/40 to-transparent" />
+      {/* ───────── Background ───────── */}
+      <div aria-hidden className="pointer-events-none absolute -z-10 inset-0">
+        {/* Layered color mesh, strongest behind the image */}
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `
+              radial-gradient(40% 35% at 10% 100%, rgba(6,182,212,0.12), transparent 70%)
+            `,
+          }}
+        />
+
+        {/* Concentric rings radiating from the image */}
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage:
+              "repeating-radial-gradient(circle at 80% 54%, transparent 0px, transparent 95px, rgba(255,255,255,0.08) 96px, transparent 97px)",
+            WebkitMaskImage:
+              "radial-gradient(ellipse 65% 75% at 80% 54%, #000 0%, transparent 100%)",
+            maskImage:
+              "radial-gradient(ellipse 65% 75% at 80% 54%, #000 0%, transparent 100%)",
+          }}
+        />
+
+        {/* Light beam under the previous section */}
+        <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-blue-400/40 to-transparent" />
+      </div>
+
       <div className="relative z-10 mx-auto px-6 container">
         {/* Header */}
         <div className="mb-16 flex flex-col items-center justify-center text-center lg:mb-20">
@@ -115,56 +147,66 @@ export function FAQ() {
                     delay: index * 0.1,
                     ease: "easeOut",
                   }}
-                  className={`group relative overflow-hidden rounded-3xl border transition-colors duration-500 ${
+                  className={`group relative overflow-hidden rounded-3xl border backdrop-blur-xl transition-[border-color,background-color,box-shadow] duration-500 ${
                     isActive
-                      ? "border-blue-400/20 bg-white/4.5 shadow-[0_20px_60px_rgba(0,0,0,0.2)]"
-                      : "border-white/8 bg-white/2 hover:border-white/15 hover:bg-white/[0.035]"
+                      ? "border-blue-400/30 bg-linear-to-br from-blue-500/10 via-white/4 to-white/2 shadow-[0_25px_70px_-20px_rgba(37,99,235,0.35)]"
+                      : "border-white/10 bg-white/3 hover:border-white/20 hover:bg-white/5"
                   }`}
                 >
-                  <button
-                    onClick={() => setActiveIndex(isActive ? null : index)}
-                    className="relative flex w-full items-center justify-between gap-6 p-6 text-left md:p-7"
-                  >
-                    <div className="flex min-w-0 items-center gap-5">
-                      {/* Number */}
-                      <span
-                        className={`hidden shrink-0 font-mono text-xs tracking-[0.15em] transition-colors duration-300 sm:block ${
-                          isActive
-                            ? "text-blue-400"
-                            : "text-white/20 group-hover:text-white/40"
-                        }`}
-                      >
-                        0{index + 1}
-                      </span>
-
-                      {/* Question */}
-                      <span
-                        className={`text-base font-semibold tracking-tight transition-colors duration-300 md:text-xl ${
-                          isActive
-                            ? "text-white"
-                            : "text-white/60 group-hover:text-white/85"
-                        }`}
-                      >
-                        {faq.question}
-                      </span>
-                    </div>
-
-                    {/* Icon */}
-                    <div
-                      className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${
-                        isActive
-                          ? "border-blue-400/20 bg-blue-500 text-white shadow-[0_0_25px_rgba(59,130,246,0.2)]"
-                          : "border-white/10 bg-white/4 text-white/40 group-hover:border-white/20 group-hover:text-white/70"
-                      }`}
+                  <h3>
+                    <button
+                      type="button"
+                      id={`faq-question-${index}`}
+                      aria-expanded={isActive}
+                      aria-controls={`faq-panel-${index}`}
+                      onClick={() => setActiveIndex(isActive ? null : index)}
+                      className={`relative flex w-full items-center justify-between gap-6 rounded-3xl p-6 text-left md:p-7 ${focusRing}`}
                     >
-                      {isActive ? <Minus size={17} /> : <Plus size={17} />}
-                    </div>
-                  </button>
+                      <span className="flex min-w-0 items-center gap-5">
+                        {/* Number */}
+                        <span
+                          className={`hidden shrink-0 font-mono text-sm tracking-[0.15em] transition-colors duration-300 sm:block ${
+                            isActive
+                              ? "text-blue-400"
+                              : "text-white/30 group-hover:text-white/50"
+                          }`}
+                        >
+                          0{index + 1}
+                        </span>
+
+                        {/* Question */}
+                        <span
+                          className={`text-base font-semibold tracking-tight transition-colors duration-300 md:text-xl ${
+                            isActive
+                              ? "text-white"
+                              : "text-white/70 group-hover:text-white"
+                          }`}
+                        >
+                          {faq.question}
+                        </span>
+                      </span>
+
+                      {/* Icon */}
+                      <span
+                        aria-hidden
+                        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${
+                          isActive
+                            ? "rotate-180 border-blue-300/30 bg-blue-500 text-white shadow-[0_0_30px_rgba(59,130,246,0.45)]"
+                            : "border-white/10 bg-white/4 text-white/50 group-hover:border-white/25 group-hover:text-white"
+                        }`}
+                      >
+                        {isActive ? <Minus size={17} /> : <Plus size={17} />}
+                      </span>
+                    </button>
+                  </h3>
 
                   {/* Answer */}
                   <AnimatePresence initial={false}>
                     {isActive && (
                       <motion.div
+                        id={`faq-panel-${index}`}
+                        role="region"
+                        aria-labelledby={`faq-question-${index}`}
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
@@ -174,17 +216,17 @@ export function FAQ() {
                         }}
                       >
                         <div className="px-6 pb-7 sm:pl-17 sm:pr-8">
-                          <div className="mb-5 h-px bg-linear-to-r from-blue-500/20 via-white/5 to-transparent" />
+                          <div className="mb-5 h-px bg-linear-to-r from-blue-400/30 via-white/8 to-transparent" />
 
-                          <p className="text-sm font-light leading-7 text-zinc-400 md:text-base">
+                          <p className="text-sm leading-7 text-zinc-300 md:text-base md:leading-8">
                             {faq.answer}
                           </p>
 
                           {/* Category */}
-                          <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/8 bg-white/3 px-3 py-1.5">
+                          <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-blue-400/20 bg-blue-500/10 px-3.5 py-1.5">
                             <span className="h-1.5 w-1.5 rounded-full bg-blue-400" />
 
-                            <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-zinc-500">
+                            <span className="text-[11px] font-semibold uppercase tracking-[0.15em] text-blue-200">
                               {faq.label}
                             </span>
                           </div>
@@ -221,52 +263,77 @@ export function FAQ() {
                   duration: 0.5,
                   ease: [0.22, 1, 0.36, 1],
                 }}
-                className="relative"
+                className="group relative"
               >
                 {/* Glow */}
-                <div className="absolute -inset-5 rounded-[2.5rem] bg-blue-500/10 blur-[50px]" />
+                <div className="absolute -inset-6 rounded-[3rem] bg-blue-500/15 blur-[60px]" />
 
-                {/* Image */}
-                <div className="relative aspect-4/3 overflow-hidden rounded-3xl border border-white/10 bg-zinc-900 shadow-[0_30px_80px_rgba(0,0,0,0.35)]">
-                  <Image
-                    src={faqs[activeIndex ?? 0]?.image}
-                    alt={faqs[activeIndex ?? 0]?.question}
-                    fill
-                    className="object-cover brightness-75 grayscale-[0.25]"
-                  />
+                {/* Gradient frame */}
+                <div className="relative rounded-3xl bg-linear-to-br from-white/30 via-white/5 to-blue-400/40 p-px shadow-[0_40px_100px_-20px_rgba(37,99,235,0.4)]">
+                  <div className="relative aspect-4/3 overflow-hidden rounded-[calc(1.5rem-1px)] bg-zinc-900">
+                    <Image
+                      src={preview.image}
+                      alt={preview.question}
+                      fill
+                      sizes="(min-width: 1024px) 45vw, 0px"
+                      className="object-cover brightness-75 grayscale-[0.25] transition-transform duration-700 ease-out group-hover:scale-105"
+                    />
 
-                  {/* Image overlays */}
-                  <div className="absolute inset-0 bg-linear-to-t from-[#040814] via-transparent to-transparent" />
+                    {/* Blue duotone tint */}
+                    <div className="absolute inset-0 bg-[#1d4ed8]/20 mix-blend-color" />
 
-                  <div className="absolute inset-0 bg-linear-to-tr from-blue-950/30 via-transparent to-transparent" />
+                    {/* Image overlays */}
+                    <div className="absolute inset-0 bg-linear-to-t from-[#040814] via-[#040814]/30 to-transparent" />
 
-                  {/* Image top label */}
-                  <div className="absolute left-6 top-6 flex items-center gap-2 rounded-full border border-white/10 bg-[#040814]/60 px-3.5 py-2 backdrop-blur-xl">
-                    <span className="h-1.5 w-1.5 rounded-full bg-blue-400 shadow-[0_0_10px_rgba(59,130,246,0.9)]" />
+                    <div className="absolute inset-0 bg-linear-to-tr from-blue-950/30 via-transparent to-transparent" />
 
-                    <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/70">
-                      {faqs[activeIndex ?? 0]?.label}
-                    </span>
-                  </div>
+                    {/* Image highlight */}
+                    <div className="absolute inset-x-8 top-0 h-px bg-linear-to-r from-transparent via-white/40 to-transparent" />
 
-                  {/* Image bottom information */}
-                  <div className="absolute bottom-6 left-6 right-6">
-                    <div className="flex items-end justify-between gap-5">
+                    {/* Image top label */}
+                    <div className="absolute left-6 top-6 flex items-center gap-2 rounded-full border border-white/15 bg-[#040814]/60 px-3.5 py-2 backdrop-blur-xl">
+                      <span className="h-1.5 w-1.5 rounded-full bg-blue-400 shadow-[0_0_10px_rgba(59,130,246,0.9)]" />
+
+                      <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/80">
+                        {preview.label}
+                      </span>
+                    </div>
+
+                    {/* Image bottom information */}
+                    <div className="absolute inset-x-6 bottom-6 flex items-end justify-between gap-5">
                       <div>
-                        <p className="text-xs uppercase tracking-[0.2em] text-blue-400">
+                        <p className="font-mono text-xs tracking-[0.2em] text-blue-300">
                           0{(activeIndex ?? 0) + 1}
                         </p>
 
-                        <h3 className="mt-2 max-w-md text-lg font-semibold text-white">
-                          {faqs[activeIndex ?? 0]?.question}
+                        <h3 className="mt-2 max-w-md text-lg font-semibold leading-snug text-white">
+                          {preview.question}
                         </h3>
+                      </div>
+
+                      {/* Step indicators */}
+                      <div className="flex shrink-0 items-center gap-1.5 pb-1.5">
+                        {faqs.map((faq, i) => (
+                          <button
+                            key={faq.label}
+                            type="button"
+                            aria-label={`Show question ${i + 1}: ${faq.label}`}
+                            onClick={() => setActiveIndex(i)}
+                            className={`h-1.5 rounded-full transition-all duration-300 ${focusRing} ${
+                              (activeIndex ?? 0) === i
+                                ? "w-7 bg-blue-400"
+                                : "w-1.5 bg-white/30 hover:bg-white/60"
+                            }`}
+                          />
+                        ))}
                       </div>
                     </div>
                   </div>
                 </div>
 
                 {/* Decorative corner */}
-                <div className="absolute -bottom-3 -right-3 h-20 w-20 rounded-br-3xl border-b border-r border-blue-400/20" />
+                <div className="absolute -bottom-3 -right-3 h-20 w-20 rounded-br-3xl border-b border-r border-blue-400/30" />
+                <div className="absolute -left-3 -top-3 h-20 w-20 rounded-tl-3xl border-l border-t border-blue-400/20" />
               </motion.div>
             </AnimatePresence>
           </div>
