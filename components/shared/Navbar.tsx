@@ -12,14 +12,10 @@ import {
   Database,
   Code2,
   Sparkles,
-  Building2,
-  ShoppingCart,
-  GraduationCap,
-  HeartPulse,
 } from "lucide-react";
 import Link from "next/link";
 
-type MenuKey = "services" | "industries";
+type MenuKey = "services";
 
 /** How long (ms) the menu stays open after the cursor leaves it. */
 const CLOSE_DELAY = 160;
@@ -127,53 +123,48 @@ const Navbar = () => {
 
             <div className="hidden items-center gap-10 lg:flex xl:gap-14">
               <NavLink href="/#about">About</NavLink>
-              {(
-                [
-                  { key: "services", label: "Services" },
-                  { key: "industries", label: "Industries" },
-                ] as const
-              ).map(({ key, label }) => (
-                <div
-                  key={key}
-                  className="relative"
-                  onMouseEnter={() => openMenu(key)}
-                  onMouseLeave={scheduleClose}
+              <div
+                className="relative"
+                onMouseEnter={() => openMenu("services")}
+                onMouseLeave={scheduleClose}
+              >
+                <button
+                  type="button"
+                  aria-haspopup="true"
+                  aria-expanded={activeMenu === "services"}
+                  onFocus={() => openMenu("services")}
+                  className={`group relative flex items-center gap-1.5 py-3 font-semibold uppercase tracking-wide transition-colors duration-200 ${focusRing} ${
+                    activeMenu === "services"
+                      ? "text-white"
+                      : "text-zinc-300 hover:text-white"
+                  }`}
                 >
-                  <button
-                    type="button"
-                    aria-haspopup="true"
-                    aria-expanded={activeMenu === key}
-                    onFocus={() => openMenu(key)}
-                    className={`group relative flex items-center gap-1.5 py-3 font-semibold uppercase tracking-wide transition-colors duration-200 ${focusRing} ${
-                      activeMenu === key
-                        ? "text-white"
-                        : "text-zinc-300 hover:text-white"
+                  Services
+                  <ChevronDown
+                    size={15}
+                    className={`transition-transform duration-300 ${
+                      activeMenu === "services"
+                        ? "rotate-180 text-blue-400"
+                        : ""
                     }`}
-                  >
-                    {label}
-                    <ChevronDown
-                      size={15}
-                      className={`transition-transform duration-300 ${
-                        activeMenu === key ? "rotate-180 text-blue-400" : ""
-                      }`}
-                    />
-                    <span
-                      aria-hidden
-                      className={`absolute inset-x-0 bottom-1.5 h-0.5 origin-left rounded-full bg-blue-400 transition-transform duration-300 ${
-                        activeMenu === key ? "scale-x-100" : "scale-x-0"
-                      }`}
-                    />
-                  </button>
+                  />
+                  <span
+                    aria-hidden
+                    className={`absolute inset-x-0 bottom-1.5 h-0.5 origin-left rounded-full bg-blue-400 transition-transform duration-300 ${
+                      activeMenu === "services" ? "scale-x-100" : "scale-x-0"
+                    }`}
+                  />
+                </button>
 
-                  <AnimatePresence>
-                    {activeMenu === key && (
-                      <MegaMenu type={key} onNavigate={closeMenuNow} />
-                    )}
-                  </AnimatePresence>
-                </div>
-              ))}
+                <AnimatePresence>
+                  {activeMenu === "services" && (
+                    <MegaMenu onNavigate={closeMenuNow} />
+                  )}
+                </AnimatePresence>
+              </div>
 
               <NavLink href="/#projects">Projects</NavLink>
+              <NavLink href="/#faq">Faq</NavLink>
             </div>
 
             <div className="hidden lg:block">
@@ -267,51 +258,6 @@ const Navbar = () => {
                   )}
                 </AnimatePresence>
 
-                <MobileMenuItem
-                  title="Industries"
-                  open={mobileSubmenu === "industries"}
-                  onClick={() =>
-                    setMobileSubmenu(
-                      mobileSubmenu === "industries" ? null : "industries",
-                    )
-                  }
-                />
-
-                <AnimatePresence>
-                  {mobileSubmenu === "industries" && (
-                    <MobileSubmenu>
-                      <MobileLink
-                        icon={<Building2 size={19} />}
-                        title="Enterprise"
-                        description="Digital solutions for organizations"
-                        href="#"
-                        onClick={closeMobileMenu}
-                      />
-                      <MobileLink
-                        icon={<ShoppingCart size={19} />}
-                        title="E-Commerce"
-                        description="Scalable online commerce systems"
-                        href="#"
-                        onClick={closeMobileMenu}
-                      />
-                      <MobileLink
-                        icon={<GraduationCap size={19} />}
-                        title="Education"
-                        description="Modern education platforms"
-                        href="#"
-                        onClick={closeMobileMenu}
-                      />
-                      <MobileLink
-                        icon={<HeartPulse size={19} />}
-                        title="Healthcare"
-                        description="Technology for better healthcare"
-                        href="#"
-                        onClick={closeMobileMenu}
-                      />
-                    </MobileSubmenu>
-                  )}
-                </AnimatePresence>
-
                 <Link
                   href="/#projects"
                   onClick={closeMobileMenu}
@@ -367,15 +313,7 @@ const NavLink = ({
   </Link>
 );
 
-const MegaMenu = ({
-  type,
-  onNavigate,
-}: {
-  type: MenuKey;
-  onNavigate: () => void;
-}) => {
-  const isServices = type === "services";
-
+const MegaMenu = ({ onNavigate }: { onNavigate: () => void }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 12, scale: 0.985 }}
@@ -393,129 +331,94 @@ const MegaMenu = ({
       <div aria-hidden className="absolute inset-x-0 -top-10 h-10" />
 
       <div className="max-h-[calc(100dvh-115px)] overflow-y-auto overscroll-contain rounded-3xl bg-white p-5 shadow-[0_40px_100px_-20px_rgba(4,8,20,0.55)] ring-1 ring-black/5 sm:p-7 lg:p-8">
-        {isServices ? (
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1.4fr_1fr] lg:gap-8">
-            <div className="min-w-0">
-              <MegaHeading>Core Departments</MegaHeading>
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1.4fr_1fr] lg:gap-8">
+          <div className="min-w-0">
+            <MegaHeading>Core Departments</MegaHeading>
 
-              <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-                <MegaCard
-                  icon={<MonitorSmartphone size={22} />}
-                  title="Product Design"
-                  description="UX/UI built around product and business goals"
-                />
-                <MegaCard
-                  icon={<MonitorSmartphone size={22} />}
-                  title="Web Design"
-                  description="End-to-end websites, from design to launch"
-                />
-                <MegaCard
-                  icon={<Sparkles size={22} />}
-                  title="Branding"
-                  description="Strategy + identity for ambitious digital-first brands"
-                />
-                <MegaCard
-                  icon={<Code2 size={22} />}
-                  title="Web Development"
-                  description="From MVPs to scalable, robust digital products"
-                />
-              </div>
+            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+              <MegaCard
+                icon={<MonitorSmartphone size={22} />}
+                title="Product Design"
+                description="UX/UI built around product and business goals"
+              />
+              <MegaCard
+                icon={<MonitorSmartphone size={22} />}
+                title="Web Design"
+                description="End-to-end websites, from design to launch"
+              />
+              <MegaCard
+                icon={<Sparkles size={22} />}
+                title="Branding"
+                description="Strategy + identity for ambitious digital-first brands"
+              />
+              <MegaCard
+                icon={<Code2 size={22} />}
+                title="Web Development"
+                description="From MVPs to scalable, robust digital products"
+              />
+            </div>
 
-              <Link
-                href="#"
-                className={`group relative mt-6 block overflow-hidden rounded-2xl bg-[#090d24] p-6 text-white transition-shadow duration-300 hover:shadow-[0_20px_40px_-12px_rgba(9,13,36,0.5)] ${focusRing}`}
-              >
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute -right-10 -top-16 h-44 w-44 rounded-full bg-blue-500/25 blur-3xl transition-all duration-500 group-hover:bg-blue-400/35"
-                />
+            <Link
+              href="#"
+              className={`group relative mt-6 block overflow-hidden rounded-2xl bg-[#090d24] p-6 text-white transition-shadow duration-300 hover:shadow-[0_20px_40px_-12px_rgba(9,13,36,0.5)] ${focusRing}`}
+            >
+              <div
+                aria-hidden
+                className="pointer-events-none absolute -right-10 -top-16 h-44 w-44 rounded-full bg-blue-500/25 blur-3xl transition-all duration-500 group-hover:bg-blue-400/35"
+              />
 
-                <div className="relative flex items-center justify-between gap-5">
-                  <div>
-                    <div className="mb-2 flex flex-wrap items-center gap-3">
-                      <h3 className="text-lg font-bold">Product Discovery</h3>
+              <div className="relative flex items-center justify-between gap-5">
+                <div>
+                  <div className="mb-2 flex flex-wrap items-center gap-3">
+                    <h3 className="text-lg font-bold">Product Discovery</h3>
 
-                      <span className="rounded-full bg-white/10 px-2.5 py-1 text-[10px] font-bold text-blue-200 ring-1 ring-white/15">
-                        1–2 weeks
-                      </span>
-                    </div>
-
-                    <p className="text-sm text-zinc-300 sm:text-base">
-                      Turn an idea into a clear, validated product plan
-                    </p>
+                    <span className="rounded-full bg-white/10 px-2.5 py-1 text-[10px] font-bold text-blue-200 ring-1 ring-white/15">
+                      1–2 weeks
+                    </span>
                   </div>
 
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-[#090d24] transition-transform duration-300 group-hover:rotate-45">
-                    <ArrowUpRight size={20} />
-                  </span>
+                  <p className="text-sm text-zinc-300 sm:text-base">
+                    Turn an idea into a clear, validated product plan
+                  </p>
                 </div>
-              </Link>
+
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-[#090d24] transition-transform duration-300 group-hover:rotate-45">
+                  <ArrowUpRight size={20} />
+                </span>
+              </div>
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 gap-8 rounded-2xl bg-slate-50 p-6 sm:grid-cols-2 lg:p-7">
+            <div>
+              <MegaHeading>Design</MegaHeading>
+
+              <ul className="space-y-1">
+                <MegaTextLink title="SaaS Design" />
+                <MegaTextLink title="Mobile App Design" />
+                <MegaTextLink title="Landing Page Design" />
+                <MegaTextLink title="Website Redesign" />
+                <MegaTextLink title="Rebranding" />
+                <MegaTextLink title="Design Systems" />
+                <MegaTextLink title="UX Audit" />
+              </ul>
             </div>
 
-            <div className="grid grid-cols-1 gap-8 rounded-2xl bg-slate-50 p-6 sm:grid-cols-2 lg:p-7">
-              <div>
-                <MegaHeading>Design</MegaHeading>
+            <div>
+              <MegaHeading>Development</MegaHeading>
 
-                <ul className="space-y-1">
-                  <MegaTextLink title="SaaS Design" />
-                  <MegaTextLink title="Mobile App Design" />
-                  <MegaTextLink title="Landing Page Design" />
-                  <MegaTextLink title="Website Redesign" />
-                  <MegaTextLink title="Rebranding" />
-                  <MegaTextLink title="Design Systems" />
-                  <MegaTextLink title="UX Audit" />
-                </ul>
-              </div>
-
-              <div>
-                <MegaHeading>Development</MegaHeading>
-
-                <ul className="space-y-1">
-                  <MegaTextLink title="AI Integration" />
-                  <MegaTextLink title="Mobile App Development" />
-                  <MegaTextLink title="MVP Development" />
-                  <MegaTextLink title="Software Development" />
-                  <MegaTextLink title="CMS Development" />
-                  <MegaTextLink title="Cloud Development" />
-                  <MegaTextLink title="API Development" />
-                </ul>
-              </div>
+              <ul className="space-y-1">
+                <MegaTextLink title="AI Integration" />
+                <MegaTextLink title="Mobile App Development" />
+                <MegaTextLink title="MVP Development" />
+                <MegaTextLink title="Software Development" />
+                <MegaTextLink title="CMS Development" />
+                <MegaTextLink title="Cloud Development" />
+                <MegaTextLink title="API Development" />
+              </ul>
             </div>
           </div>
-        ) : (
-          <div>
-            <div className="mb-7">
-              <MegaHeading>Industries We Serve</MegaHeading>
-
-              <h2 className="-mt-3 text-2xl font-bold tracking-tight text-[#090d24] sm:text-3xl">
-                Technology built around your industry
-              </h2>
-            </div>
-
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              <IndustryCard
-                icon={<Building2 size={24} />}
-                title="Enterprise"
-                description="Scalable digital systems for modern organizations."
-              />
-              <IndustryCard
-                icon={<ShoppingCart size={24} />}
-                title="E-Commerce"
-                description="High-performance commerce experiences."
-              />
-              <IndustryCard
-                icon={<GraduationCap size={24} />}
-                title="Education"
-                description="Digital platforms for learning and growth."
-              />
-              <IndustryCard
-                icon={<HeartPulse size={24} />}
-                title="Healthcare"
-                description="Technology designed around better experiences."
-              />
-            </div>
-          </div>
-        )}
+        </div>
       </div>
     </motion.div>
   );
@@ -577,42 +480,6 @@ const MegaTextLink = ({ title }: { title: string }) => {
         />
       </Link>
     </li>
-  );
-};
-
-const IndustryCard = ({
-  icon,
-  title,
-  description,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  description: string;
-}) => {
-  return (
-    <Link
-      href="#"
-      className={`group relative flex min-h-52 flex-col rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-[0_20px_40px_-16px_rgba(30,64,175,0.25)] ${focusRing}`}
-    >
-      <div className="flex items-start justify-between">
-        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-50 text-[#090d24] transition-colors duration-300 group-hover:bg-[#090d24] group-hover:text-white">
-          {icon}
-        </div>
-
-        <span className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 text-slate-400 transition-all duration-300 group-hover:border-[#090d24] group-hover:bg-[#090d24] group-hover:text-white">
-          <ArrowUpRight
-            size={16}
-            className="transition-transform duration-300 group-hover:rotate-45"
-          />
-        </span>
-      </div>
-
-      <div className="mt-auto pt-8">
-        <h3 className="text-lg font-bold text-[#090d24]">{title}</h3>
-
-        <p className="mt-2 text-sm leading-6 text-slate-500">{description}</p>
-      </div>
-    </Link>
   );
 };
 

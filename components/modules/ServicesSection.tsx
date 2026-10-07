@@ -8,14 +8,10 @@ import {
   Layout,
   Database,
   LineChart,
-  ArrowUpRight,
   Check,
 } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-const focusRing =
-  "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-400";
 
 const services = [
   {
@@ -255,36 +251,6 @@ export function ServicesSection() {
               </div>
             );
           })}
-        </div>
-
-        {/* Bottom CTA / statement */}
-        <div className="service-header relative mt-16 overflow-hidden rounded-3xl bg-linear-to-r from-white/25 via-white/8 to-blue-400/30 p-px lg:mt-20">
-          <div className="relative flex flex-col items-center justify-between gap-6 overflow-hidden rounded-[calc(1.5rem-1px)] bg-black/90 px-7 py-8 text-center md:flex-row md:px-10 md:text-left">
-            <div
-              aria-hidden
-              className="pointer-events-none absolute -right-20 top-1/2 h-56 w-56 -translate-y-1/2 rounded-full bg-blue-500/25 blur-[90px]"
-            />
-
-            <div className="relative">
-              <p className="text-xl font-bold tracking-tight text-white md:text-2xl">
-                Have a project in mind?
-              </p>
-
-              <p className="mt-2 text-sm text-zinc-400 md:text-base">
-                Let&apos;s build something exceptional together.
-              </p>
-            </div>
-
-            <button
-              type="button"
-              className={`group relative flex items-center gap-4 rounded-full bg-white py-2 pl-6 pr-2 text-sm font-bold text-[#040814] transition-all duration-300 hover:bg-blue-50 hover:shadow-[0_0_40px_rgba(96,165,250,0.45)] ${focusRing}`}
-            >
-              Start a conversation
-              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#040814] text-white transition-transform duration-300 group-hover:rotate-45">
-                <ArrowUpRight size={16} />
-              </span>
-            </button>
-          </div>
         </div>
       </div>
     </section>
