@@ -1,4 +1,3 @@
-// import { BlogSection } from "@/components/modules/BlogSection";
 import { FAQ } from "@/components/modules/FAQ";
 import { HeroSection } from "@/components/modules/HeroSection";
 import { Portfolio } from "@/components/modules/Portfolio";
@@ -12,7 +11,7 @@ export default function Home() {
       <HeroSection />
       <AboutSection />
       <ServicesSection />
-      {/* <Portfolio /> */}
+      <Portfolio />
       <StatsSection />
       <FAQ />
       {/* <BlogSection /> */}

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
-// @ts-ignore - Vanta doesn't have official TS types
+// @ts-expect-error - Vanta doesn't have official TS types
 import GLOBE from "vanta/dist/vanta.globe.min";
 import gsap from "gsap";
 import {
@@ -17,6 +17,7 @@ export function HeroSection() {
   const descriptionRef = useRef<HTMLParagraphElement>(null);
   const bottomCardsRef = useRef<HTMLDivElement>(null);
   const vantaRef = useRef<HTMLDivElement>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [vantaEffect, setVantaEffect] = useState<any>(null);
 
   // Initialize Full-Screen Vanta Globe

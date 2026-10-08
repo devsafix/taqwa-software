@@ -15,6 +15,7 @@ import {
   Smartphone,
 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 type MenuKey = "services";
 
@@ -111,10 +112,16 @@ const Navbar = () => {
             <Link
               href="/"
               onClick={closeMobileMenu}
-              className={`relative z-70 flex items-center gap-2 rounded-md ${focusRing}`}
+              className={`relative z-70 flex items-center gap-1 rounded-md ${focusRing}`}
             >
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white">
-                <span className="font-black text-black">T</span>
+              <div className="flex h-8 w-8 items-center justify-center">
+                <Image
+                  src="/logo.png"
+                  alt="Taqwa Software"
+                  width={32}
+                  height={32}
+                  className="object-contain"
+                />
               </div>
 
               <span className="md:text-2xl text-xl font-bold tracking-tight text-white">
@@ -164,7 +171,7 @@ const Navbar = () => {
                 </AnimatePresence>
               </div>
 
-              <NavLink href="/#projects">Projects</NavLink>
+              <NavLink href="/#portfolio">Portfolio</NavLink>
               <NavLink href="/#faq">Faq</NavLink>
             </div>
 
@@ -260,7 +267,7 @@ const Navbar = () => {
                 </AnimatePresence>
 
                 <Link
-                  href="/#projects"
+                  href="/#portfolio"
                   onClick={closeMobileMenu}
                   className="block border-b border-white/10 py-5 text-base font-semibold uppercase tracking-wide text-white transition-colors hover:text-blue-400"
                 >
