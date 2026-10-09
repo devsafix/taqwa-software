@@ -68,9 +68,8 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: "/favicon.ico",
-    shortcut: "/favicon-16x16.png",
-    apple: "/apple-touch-icon.png",
   },
+  metadataBase: new URL("https://taqwasoftware.com"),
 };
 
 const jsonLd = {
@@ -102,7 +101,7 @@ export default function RootLayout({
         <Navbar />
         <main className="grow">{children}</main>
         <Footer />
-         <ScrollToTop />
+        <ScrollToTop />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

@@ -11,6 +11,7 @@ import {
   MapPin,
 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 const focusRing =
   "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-400";
@@ -60,16 +61,8 @@ const Footer: React.FC = () => {
     },
   ];
 
-  const scrollToTop = () => {
-    const reduceMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-
-    window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
-  };
-
   return (
-    <footer className="relative overflow-hidden bg-[#040814] px-4 pb-8 pt-16 md:px-6 md:pt-24">
+    <footer className="relative overflow-hidden bg-[#040814] pb-8 pt-16 md:px-6 md:pt-24">
       {/* Ambient Background */}
       <div className="pointer-events-none absolute -left-60 bottom-0 h-125 w-125 rounded-full bg-blue-600/8 blur-[140px]" />
 
@@ -97,12 +90,17 @@ const Footer: React.FC = () => {
           <div className="space-y-7 md:col-span-2 lg:col-span-1">
             <Link
               href="/"
-              className={`group inline-flex items-center gap-3 rounded-lg ${focusRing}`}
+              className={`group inline-flex items-center gap-1 rounded-lg ${focusRing}`}
             >
-              <div className="flex h-11 w-11 rotate-3 items-center justify-center rounded-xl bg-white transition-all duration-300 group-hover:rotate-12 group-hover:bg-blue-400">
-                <span className="text-lg font-black text-black">T</span>
+              <div className="flex h-8 w-8 items-center justify-center">
+                <Image
+                  src="/logo.png"
+                  alt="Taqwa Software"
+                  width={32}
+                  height={32}
+                  className="object-contain"
+                />
               </div>
-
               <span className="text-2xl font-bold uppercase tracking-tighter text-white">
                 Taqwa Software
               </span>
@@ -196,8 +194,6 @@ const Footer: React.FC = () => {
                   </p>
 
                   <p className="mt-0.5 text-sm font-medium leading-6 text-zinc-200">
-                    Innovation Tower, DIFC
-                    <br />
                     Dhaka, Bangladesh
                   </p>
                 </div>
