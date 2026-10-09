@@ -139,6 +139,7 @@ export function ServicesSection() {
   return (
     <section
       ref={sectionRef}
+      id="services"
       className="relative isolate overflow-hidden bg-black/50 py-20 lg:py-24"
     >
       {/* ───────── Background ───────── */}

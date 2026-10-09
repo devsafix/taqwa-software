@@ -1,15 +1,7 @@
 "use client";
 
 import React from "react";
-import {
-  Instagram,
-  Twitter,
-  Linkedin,
-  Github,
-  ArrowUpRight,
-  Mail,
-  MapPin,
-} from "lucide-react";
+import { Linkedin, Github, ArrowUpRight, Mail, MapPin } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -26,38 +18,28 @@ const Footer: React.FC = () => {
     },
     {
       name: "Services",
-      href: "#services",
+      href: "/#services",
     },
     {
       name: "Projects",
-      href: "#works",
+      href: "/#portfolio",
     },
     {
-      name: "Careers",
-      href: "/careers",
+      name: "FAQ",
+      href: "/#faq",
     },
   ];
 
   const social = [
     {
       name: "Linkedin",
-      href: "https://www.linkedin.com/company/taqwasoft",
+      href: "https://www.linkedin.com/company/taqwa-software",
       icon: Linkedin,
     },
     {
       name: "Github",
-      href: "https://github.com/taqwasoft",
+      href: "https://github.com/taqwa-software",
       icon: Github,
-    },
-    {
-      name: "Instagram",
-      href: "https://www.instagram.com/taqwasoft",
-      icon: Instagram,
-    },
-    {
-      name: "Twitter",
-      href: "https://twitter.com/taqwasoft",
-      icon: Twitter,
     },
   ];
 
